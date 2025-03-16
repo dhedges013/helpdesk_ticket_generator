@@ -2,10 +2,11 @@
 Simulates nonsense IT Helpdesk Tickets and conversations 
 
 Control the date range and possible number of back and forth communication in the config.py file variables:
-Default Values:
 
-DAYS_AGO = 365
-MAX_CONVERSATION_ROUNDS = 7
+- Default Values:
+
+    - DAYS_AGO = 365
+    - MAX_CONVERSATION_ROUNDS = 7
 
 The content for the Tickets and Conversations are pulled from CSV data located here /data/generatorData/
 Each CSV holds the data set that is randomlly pulled from when generating the helpdesk ticket
