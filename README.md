@@ -34,7 +34,7 @@ Created Tickets and Conversations will be output to the results folder in their 
 ## Done List
     - 3.16.25 Updated conversation output to include the Customer Name
     - 3.16.25 Updated the results output for tickets and conversations to have the Customer name as the first column
-    - 3.16.25 Updated README file and some other same formating
+    - 3.16.25 Updated README file and some other formating
     - 3.16.25 removed to-do-list.txt file
 
     - Before 3.16 - added in converstations generator
