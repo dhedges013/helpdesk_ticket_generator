@@ -1,4 +1,4 @@
-## helpdesk_generator
+## helpdesk_ticket_generator
 Simulates nonsense IT Helpdesk Tickets and conversations 
 
 Control the date range and possible number of back and forth communication in the config.py file variables:
@@ -31,15 +31,14 @@ Application logs generate a new file each run in logs folder.
 Created Tickets and Conversations will be output to the results folder in their own csv files
 
 ## Done List
-3.16.25
-    Updated README file and some other same formating
-    removed to-do-list.txt file
+    - 3.16.25 Updated conversation output to include the Customer Name
+    - 3.16.25 Updated the results output for tickets and conversations to have the Customer name as the first column
+    - 3.16.25 Updated README file and some other same formating
+    - 3.16.25 removed to-do-list.txt file
 
-Before 3.16
-    added in converstations generator
+    - Before 3.16 - added in converstations generator
 
 
 ## To-Do List 3.16.25
-    add in labor time generator
-    converestation csv result does not include the customer name
-    
+    - add in labor time generator
+    - converestation csv result does not include the customer name   

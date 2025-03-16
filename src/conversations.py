@@ -163,11 +163,12 @@ def create_complete_ticket_conversation(ticket):
     
     try:
         # Validate required fields
-        required_fields = ["Ticket Number", "Assigned Tech", "Contact", "Start Time", "End Time"]
+        required_fields = ["Customer","Ticket Number", "Assigned Tech", "Contact", "Start Time", "End Time"]
         for field in required_fields:
             if field not in ticket or ticket[field] is None:
                 raise ValueError(f"Missing or invalid ticket field: {field}")
 
+        customer = ticket["Customer"]
         ticket_number = ticket["Ticket Number"]
         tech = ticket["Assigned Tech"]
         contact = ticket["Contact"]
@@ -196,6 +197,7 @@ def create_complete_ticket_conversation(ticket):
 
             speaker = contact if message["speaker"] == "Customer" else tech
             individual_message = {
+                "Customer": customer,
                 "Ticket Number": ticket_number,
                 "speaker": speaker,
                 "message": message["message"],  

@@ -86,9 +86,9 @@ def generate_ticket():
             logging.warning(f"End time {end_time} is before start time {start_time}. Adjusting end time.")
             end_time = start_time + timedelta(hours=1)
 
-        ticket = {
-            "Ticket Number": ticket_number,
+        ticket = {            
             "Customer": customer,
+            "Ticket Number": ticket_number,
             "Contact": contact,
             "Subject": subject,
             "Status": status,         
