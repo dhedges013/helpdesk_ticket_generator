@@ -32,6 +32,10 @@ Application logs generate a new file each run in logs folder.
 Created Tickets and Conversations will be output to the results folder in their own csv files
 
 ## Done List
+
+    - 3.18.25 added api_interface.py
+    - added in config variables for conversations csv data
+
     - 3.16.25 Updated conversation output to include the Customer Name
     - 3.16.25 Updated the results output for tickets and conversations to have the Customer name as the first column
     - 3.16.25 Updated README file and some other formating

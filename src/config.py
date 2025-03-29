@@ -8,6 +8,7 @@ BASE_DIR = os.path.abspath(
 )
 
 # Paths to specific files
+
 TICKET_CONTACTS = os.path.join(BASE_DIR, 'data/generatorData/ticketContacts.csv')
 TICKET_CUSTOMER = os.path.join(BASE_DIR, 'data/generatorData/ticketCustomer.csv')
 TICKET_DESCRIPTION = os.path.join(BASE_DIR, 'data/generatorData/ticketDescription.csv')
@@ -18,6 +19,10 @@ TICKET_SUBJECT = os.path.join(BASE_DIR, 'data/generatorData/ticketSubject.csv')
 TICKET_TECH = os.path.join(BASE_DIR, 'data/generatorData/ticketTech.csv')
 OUTPUT_TICKETS = os.path.join(BASE_DIR, 'results/outputTickets.csv')
 OUTPUT_CONVERSTATIONS = os.path.join(BASE_DIR, 'results/outputConversations.csv')
+
+INITIAL_COMPLAINT = os.path.join(BASE_DIR, 'data/generatorData/initial_complaints.csv')
+CUSTOMER_FOLLOWUP = os.path.join(BASE_DIR, 'data/generatorData/customer_followups.csv')
+HELPDESK_RESPONSE = os.path.join(BASE_DIR, 'data/generatorData/helpdesk_responses.csv')
 
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
 DAYS_AGO = 365

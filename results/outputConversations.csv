@@ -1,19 +1,13 @@
 Customer,Ticket Number,speaker,message,timestamp
-Pro Physical Therapy,6154,Mark Hendricks,HELP: I am unable to install new software.,2024-03-24 08:50:20.385691
-Pro Physical Therapy,6154,Tim the Tech,Adjust your display settings.,2024-03-28 14:05:20.385691
-Pro Physical Therapy,6154,Mark Hendricks,I confirmed that my cables are secure,2024-04-28 18:20:20.385691
-Pro Physical Therapy,6154,Tim the Tech,Reinstall your printer drivers.,2024-06-14 03:50:20.385691
-Pro Physical Therapy,6154,Mark Hendricks,I confirmed that my cables are secure,2024-06-20 05:45:20.385691
-Pro Physical Therapy,6154,Tim the Tech,Disable and re-enable your network adapter.,2024-06-23 10:20:20.385691
-Pro Physical Therapy,6154,Mark Hendricks,I ran the diagnostic tool,2024-07-02 07:30:20.385691
-Pro Physical Therapy,6154,Tim the Tech,Verify that the correct printer is selected.,2024-07-06 20:35:20.385691
-Pro Physical Therapy,6154,Mark Hendricks,The printer is still not printing after following your advice.,2024-07-23 11:15:20.385691
-Pro Physical Therapy,6154,Tim the Tech,Check if any keys on your keyboard are stuck.,2024-11-25 22:10:20.385691
-Pro Physical Therapy,6154,Mark Hendricks,I disabled the firewall as you suggested,2024-12-14 08:20:20.385691
-Pro Physical Therapy,6154,Tim the Tech,Try accessing the system from a different browser.,2025-01-20 23:05:20.385691
-Pro Physical Therapy,6154,Mark Hendricks,I tried unplugging and reconnecting the device,2025-01-24 01:50:20.385691
-Pro Physical Therapy,6154,Tim the Tech,Verify that your device is properly connected to the network.,2025-01-27 14:07:28.645829
-Advanced Electrical Services,7859,Jonathan Allen,URGENT: My computer's performance has significantly degraded.,2024-05-02 00:32:33.266932
-Advanced Electrical Services,7859,Tim the Tech,Confirm your username is correct.,2024-05-06 23:02:33.266932
-Advanced Electrical Services,7859,Jonathan Allen,I checked all the cables,2024-05-08 09:57:33.266932
-Advanced Electrical Services,7859,Tim the Tech,Verify that your proxy settings are correct.,2024-12-04 04:44:14.718793
+Advanced Landscaping Company,3459,Charles Weber,URGENT: The system is experiencing frequent lag.,2025-02-21 01:55:15.751652
+Advanced Landscaping Company,3459,Daniel Hedges,Reset your network settings.,2025-02-21 02:05:15.751652
+Advanced Landscaping Company,3459,Charles Weber,I tried restarting my computer,2025-02-21 02:10:15.751652
+Advanced Landscaping Company,3459,Daniel Hedges,Clear your DNS cache.,2025-02-21 02:15:15.751652
+Advanced Landscaping Company,3459,Charles Weber,The printer is still not printing after following your advice.,2025-02-21 02:20:15.751652
+Advanced Landscaping Company,3459,Daniel Hedges,Reboot your router.,2025-02-21 02:25:15.751652
+Advanced Landscaping Company,3459,Charles Weber,The issue reoccurred despite trying your solution.,2025-02-21 02:30:15.751652
+Advanced Landscaping Company,3459,Daniel Hedges,Contact IT support if the issue persists.,2025-02-21 02:35:15.751652
+Advanced Landscaping Company,3459,Charles Weber,I double-checked the connections,2025-02-21 02:40:15.751652
+Advanced Landscaping Company,3459,Daniel Hedges,Try unplugging and plugging back in the device.,2025-02-21 02:45:15.751652
+Advanced Landscaping Company,3459,Charles Weber,The screen remains black even after the restart.,2025-02-21 02:50:15.751652
+Advanced Landscaping Company,3459,Daniel Hedges,Verify that your device is properly connected to the network.,2025-02-21 02:55:15.751652

@@ -3,7 +3,7 @@ import csv
 import tracery
 from tracery.modifiers import base_english
 import random
-from .config import MAX_CONVERSATION_ROUNDS, get_logger
+from .config import MAX_CONVERSATION_ROUNDS, get_logger, BASE_DIR,INITIAL_COMPLAINT,CUSTOMER_FOLLOWUP,HELPDESK_RESPONSE
 from datetime import datetime, timedelta
 
 logger = get_logger(__name__)
@@ -14,18 +14,11 @@ def load_csv_elements(file_path):
         reader = csv.reader(csvfile)
         return [row[0] for row in reader if row]
 
-# Configuration variable with paths to CSV files
-config = {
-    "initial_complaint": "./data/generatorData/initial_complaints.csv",
-    "customer_followup": "./data/generatorData/customer_followups.csv",
-    "helpdesk_response": "./data/generatorData/helpdesk_responses.csv"
-}
-
 # Load the CSV content into grammar rules
 grammar_rules = {
-    "initial_complaint": load_csv_elements(config["initial_complaint"]),
-    "customer_followup": load_csv_elements(config["customer_followup"]),
-    "helpdesk_response": load_csv_elements(config["helpdesk_response"]),
+    "initial_complaint": load_csv_elements(INITIAL_COMPLAINT),
+    "customer_followup": load_csv_elements(CUSTOMER_FOLLOWUP),
+    "helpdesk_response": load_csv_elements(HELPDESK_RESPONSE),
     "greeting": ["HELP", "URGENT", "Attention"]
 }
 def generate_ticket_conversation():
