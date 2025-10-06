@@ -202,13 +202,48 @@ def generate_time_entries(ticket: dict, prior_entries: Optional[Sequence[dict]] 
     if not isinstance(end_time, datetime):
         end_time = start_time + timedelta(minutes=durations[-1])
 
+    available_minutes = max(0, int((end_time - start_time).total_seconds() // 60))
+    min_duration = min(durations)
+
+    if available_minutes < min_duration:
+        logger.info(
+            "Time entry generation skipped for Ticket %s because the ticket window (%s min) is"
+            " shorter than the minimum duration (%s min).",
+            ticket_number,
+            available_minutes,
+            min_duration,
+        )
+        return []
+
+    max_entries_by_window = max(1, available_minutes // min_duration)
+    if entry_count > max_entries_by_window:
+        logger.info(
+            "Reducing time entry count for Ticket %s from %s to %s to fit within the ticket"
+            " duration window.",
+            ticket_number,
+            entry_count,
+            max_entries_by_window,
+        )
+        entry_count = max_entries_by_window
+
     offsets = _generate_offsets(entry_count, start_time, end_time, max(1, TIME_ENTRY_DURATION_INTERVAL_MINUTES))
     dependency_source = list(prior_entries) if prior_entries else None
 
     generated_entries: List[dict] = []
 
+    remaining_minutes = available_minutes
+
     for index in range(entry_count):
-        duration = random.choice(durations)
+        entries_left = entry_count - index
+        max_for_entry = remaining_minutes - min_duration * (entries_left - 1)
+        valid_choices = [value for value in durations if value <= max_for_entry]
+
+        if not valid_choices:
+            duration = min(max_for_entry, remaining_minutes)
+        else:
+            duration = random.choice(valid_choices)
+
+        remaining_minutes -= duration
         tech = _select_tech(assigned_tech, available_techs)
         visibility = random.choices(VISIBILITY_OPTIONS, weights=VISIBILITY_WEIGHTS, k=1)[0]
         billable = random.choices(BILLABLE_OPTIONS, weights=BILLABLE_WEIGHTS, k=1)[0]
