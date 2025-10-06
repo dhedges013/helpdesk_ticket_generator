@@ -5,10 +5,20 @@ import os
 from datetime import datetime
 
 from .config import (
-    TICKET_CONTACTS, TICKET_CUSTOMER, TICKET_DESCRIPTION,
-    TICKET_ISSUE_TYPES, TICKET_PRIORITY, TICKET_STATUS,
-    TICKET_SUBJECT, TICKET_TECH, OUTPUT_TICKETS, OUTPUT_CONVERSTATIONS,
-    OUTPUT_TIME_ENTRIES, get_logger
+    TICKET_CONTACTS,
+    TICKET_CUSTOMER,
+    TICKET_DESCRIPTION,
+    TICKET_ISSUE_TYPES,
+    TICKET_PRIORITY,
+    TICKET_STATUS,
+    TICKET_SUBJECT,
+    TICKET_TECH,
+    TIME_ENTRY_LABOR_TYPES,
+    TIME_ENTRY_NOTE_TEMPLATES,
+    OUTPUT_TICKETS,
+    OUTPUT_CONVERSTATIONS,
+    OUTPUT_TIME_ENTRIES,
+    get_logger,
 )
 
 logger = get_logger(__name__)
@@ -139,6 +149,22 @@ def get_all_techs():
     if not techs:
         logging.error("Failed to fetch tech data.")
     return techs
+
+
+def get_all_time_entry_labor_types():
+    logging.debug("Fetching all time entry labor types.")
+    labor_types = load_csv_data(TIME_ENTRY_LABOR_TYPES)
+    if not labor_types:
+        logging.error("Failed to fetch time entry labor type data.")
+    return labor_types
+
+
+def get_all_time_entry_note_templates():
+    logging.debug("Fetching all time entry note templates.")
+    note_templates = load_csv_data(TIME_ENTRY_NOTE_TEMPLATES)
+    if not note_templates:
+        logging.error("Failed to fetch time entry note template data.")
+    return note_templates
 
 # Retrieve random data from CSV files
 def get_random_contact():

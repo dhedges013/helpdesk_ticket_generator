@@ -15,11 +15,15 @@ from .config import (
     TIME_ENTRY_MIN_DURATION_MINUTES,
     get_logger,
 )
-from .utils import get_all_techs
+from .utils import (
+    get_all_techs,
+    get_all_time_entry_labor_types,
+    get_all_time_entry_note_templates,
+)
 
 logger = get_logger(__name__)
 
-LABOR_TYPES: Sequence[str] = (
+DEFAULT_LABOR_TYPES: Sequence[str] = (
     "Remote Support",
     "Onsite Support",
     "Project Work",
@@ -27,13 +31,37 @@ LABOR_TYPES: Sequence[str] = (
     "Research",
 )
 
-NOTE_TEMPLATES: Sequence[str] = (
+DEFAULT_NOTE_TEMPLATES: Sequence[str] = (
     "Documented progress on {subject}.",
     "Updated troubleshooting notes for {subject}.",
     "Recorded configuration changes related to {subject}.",
     "Added findings while reviewing {subject}.",
     "Captured follow-up actions for {subject}.",
 )
+
+
+def _load_labor_types() -> Sequence[str]:
+    labor_types = [item for item in get_all_time_entry_labor_types() if item]
+    if labor_types:
+        return labor_types
+    logger.warning(
+        "Falling back to default labor types because time entry labor type data is unavailable."
+    )
+    return list(DEFAULT_LABOR_TYPES)
+
+
+def _load_note_templates() -> Sequence[str]:
+    note_templates = [item for item in get_all_time_entry_note_templates() if item]
+    if note_templates:
+        return note_templates
+    logger.warning(
+        "Falling back to default time entry note templates because dataset is unavailable."
+    )
+    return list(DEFAULT_NOTE_TEMPLATES)
+
+
+LABOR_TYPES: Sequence[str] = tuple(_load_labor_types())
+NOTE_TEMPLATES: Sequence[str] = tuple(_load_note_templates())
 
 VISIBILITY_OPTIONS: Sequence[str] = ("Public", "Private")
 VISIBILITY_WEIGHTS: Sequence[int] = (1, 3)
