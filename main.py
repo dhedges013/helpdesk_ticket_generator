@@ -2,6 +2,7 @@ from src.generate_ticket_data import generate_ticket
 from src.utils import append_dict_to_csv
 from src.config import get_logger
 from src.conversations import create_complete_ticket_conversation
+from src.time_entries import generate_time_entries
 
 logger = get_logger(__name__)
 
@@ -15,6 +16,7 @@ def main():
         num_tickets = int(num_tickets)
         tickets_list = []
         conversations_list = []
+        time_entries_list = []
 
         for _ in range(num_tickets):
             try:
@@ -31,8 +33,22 @@ def main():
                     logger.error(f"Failed to generate a conversation for Ticket #{ticket.get('Ticket Number', 'Unknown')}. Skipping...")
                     continue  # Skip instead of stopping
 
-                logger.info(f"For ticket {ticket['Ticket Number']} Generated conversation: {conversation}")            
+                logger.info(f"For ticket {ticket['Ticket Number']} Generated conversation: {conversation}")
                 conversations_list.extend(conversation)  # Flatten list
+
+                time_entries = generate_time_entries(ticket)
+                if time_entries:
+                    logger.info(
+                        "Generated %s time entries for Ticket #%s",
+                        len(time_entries),
+                        ticket.get('Ticket Number', 'Unknown'),
+                    )
+                    time_entries_list.extend(time_entries)
+                else:
+                    logger.info(
+                        "No time entries created for Ticket #%s based on configuration.",
+                        ticket.get('Ticket Number', 'Unknown'),
+                    )
 
             except Exception as e:
                 logger.error(f"Error processing ticket: {e}", exc_info=True)
@@ -62,9 +78,23 @@ def main():
                 logger.error("Unexpected structure in conversations_list.")
                 return
 
+            time_entries_dict = None
+            if time_entries_list:
+                if all(isinstance(item, dict) for item in time_entries_list):
+                    time_entries_dict = {
+                        key: [entry[key] for entry in time_entries_list]
+                        for key in time_entries_list[0].keys()
+                    }
+                    logger.info("Converted time entries to dictionary format.")
+                else:
+                    logger.error("Unexpected structure in time_entries_list.")
+                    return
+
             # Save to CSV
-            append_dict_to_csv(ticket_dict, conversations_dict)
+            append_dict_to_csv(ticket_dict, conversations_dict, time_entries_dict)
             print(f"{len(tickets_list)} tickets successfully saved")
+            if time_entries_list:
+                print(f"{len(time_entries_list)} time entries successfully saved")
 
         except Exception as e:
             logger.error(f"Error processing dictionaries: {e}", exc_info=True)

@@ -19,6 +19,7 @@ TICKET_SUBJECT = os.path.join(BASE_DIR, 'data/generatorData/ticketSubject.csv')
 TICKET_TECH = os.path.join(BASE_DIR, 'data/generatorData/ticketTech.csv')
 OUTPUT_TICKETS = os.path.join(BASE_DIR, 'results/outputTickets.csv')
 OUTPUT_CONVERSTATIONS = os.path.join(BASE_DIR, 'results/outputConversations.csv')
+OUTPUT_TIME_ENTRIES = os.path.join(BASE_DIR, 'results/outputTimeEntries.csv')
 
 INITIAL_COMPLAINT = os.path.join(BASE_DIR, 'data/generatorData/initial_complaints.csv')
 CUSTOMER_FOLLOWUP = os.path.join(BASE_DIR, 'data/generatorData/customer_followups.csv')
@@ -27,6 +28,12 @@ HELPDESK_RESPONSE = os.path.join(BASE_DIR, 'data/generatorData/helpdesk_response
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
 DAYS_AGO = 365
 MAX_CONVERSATION_ROUNDS = 7
+
+TIME_ENTRY_MIN_COUNT = 0
+TIME_ENTRY_MAX_COUNT = 4
+TIME_ENTRY_MIN_DURATION_MINUTES = 15
+TIME_ENTRY_MAX_DURATION_MINUTES = 240
+TIME_ENTRY_DURATION_INTERVAL_MINUTES = 15
 
 def get_logger(name):
     logger = logging.getLogger(name)
