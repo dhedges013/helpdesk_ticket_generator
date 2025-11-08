@@ -2,6 +2,16 @@ import os
 import logging
 from datetime import datetime
 
+DAYS_AGO = 365
+MAX_CONVERSATION_ROUNDS = 7
+
+TIME_ENTRY_MIN_COUNT = 0
+TIME_ENTRY_MAX_COUNT = 4
+TIME_ENTRY_MIN_DURATION_MINUTES = 15
+TIME_ENTRY_MAX_DURATION_MINUTES = 120
+TIME_ENTRY_DURATION_INTERVAL_MINUTES = 5
+
+
 # Define base directory for generator data
 BASE_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')
@@ -28,14 +38,6 @@ CUSTOMER_FOLLOWUP = os.path.join(BASE_DIR, 'data/generatorData/customer_followup
 HELPDESK_RESPONSE = os.path.join(BASE_DIR, 'data/generatorData/helpdesk_responses.csv')
 
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
-DAYS_AGO = 365
-MAX_CONVERSATION_ROUNDS = 7
-
-TIME_ENTRY_MIN_COUNT = 0
-TIME_ENTRY_MAX_COUNT = 4
-TIME_ENTRY_MIN_DURATION_MINUTES = 15
-TIME_ENTRY_MAX_DURATION_MINUTES = 240
-TIME_ENTRY_DURATION_INTERVAL_MINUTES = 15
 
 def get_logger(name):
     logger = logging.getLogger(name)

@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 results/outputTickets.csv
 results/outputConversations.csv
+zNotes.md

@@ -1,2 +1,8 @@
 results/*
+results/outputConversations.csv
 !results/.gitignore
+outputConversations.csv
+results/outputTimeEntries.csv
+outputTimeEntries.csv
+results/outputTickets.csv
+outputTickets.csv
