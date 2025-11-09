@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import csv
 import random
-from collections import defaultdict
+from collections import OrderedDict, defaultdict
 from datetime import datetime
 from pathlib import Path
 from pprint import pprint
@@ -70,21 +70,27 @@ def _format_ticket_info(ticket_row: Optional[Dict[str, Any]]) -> Dict[str, Any]:
     }
 
 
-def _format_conversations(conversation_rows: Iterable[Dict[str, Any]]) -> List[List[Any]]:
-    formatted: List[List[Any]] = []
+def _format_conversations(
+    conversation_rows: Iterable[Dict[str, Any]]
+) -> List[Dict[str, Any]]:
+    formatted: List[Dict[str, Any]] = []
     for row in conversation_rows:
         formatted.append(
-            [
-                row.get("speaker", ""),
-                row.get("message", ""),
-                _format_timestamp(row.get("timestamp")),
-            ]
+            OrderedDict(
+                [
+                    ("Speaker", row.get("speaker", "")),
+                    ("Message", row.get("message", "")),
+                    ("Timestamp", _format_timestamp(row.get("timestamp"))),
+                ]
+            )
         )
     return formatted
 
 
-def _format_time_entries(time_entry_rows: Iterable[Dict[str, Any]]) -> List[List[Any]]:
-    formatted: List[List[Any]] = []
+def _format_time_entries(
+    time_entry_rows: Iterable[Dict[str, Any]]
+) -> List[Dict[str, Any]]:
+    formatted: List[Dict[str, Any]] = []
     for row in time_entry_rows:
         duration = row.get("Duration Minutes", "")
         try:
@@ -92,16 +98,23 @@ def _format_time_entries(time_entry_rows: Iterable[Dict[str, Any]]) -> List[List
         except (TypeError, ValueError):
             pass
 
+        if isinstance(duration, int):
+            duration_display: Any = f"{duration} minutes"
+        else:
+            duration_display = duration
+
         formatted.append(
-            [
-                row.get("Tech", ""),
-                duration,
-                row.get("Visibility", ""),
-                row.get("Billable Status", ""),
-                row.get("Labor Type", ""),
-                _format_timestamp(row.get("Created At")),
-                row.get("Notes", ""),
-            ]
+            OrderedDict(
+                [
+                    ("Tech", row.get("Tech", "")),
+                    ("Duration", duration_display),
+                    ("Visibility", row.get("Visibility", "")),
+                    ("Billable Status", row.get("Billable Status", "")),
+                    ("Labor Type", row.get("Labor Type", "")),
+                    ("Created At", _format_timestamp(row.get("Created At"))),
+                    ("Notes", row.get("Notes", "")),
+                ]
+            )
         )
     return formatted
 
@@ -148,13 +161,12 @@ def _select_completed_ticket() -> Optional[Dict[str, Any]]:
     conversation_items = _format_conversations(conversations_by_number[selected_ticket_number])
     time_entry_items = _format_time_entries(time_entries_by_number.get(selected_ticket_number, []))
 
-    return {
-        selected_ticket_number: {
-            "Ticket Info": ticket_info,
-            "Messages": conversation_items,
-            "Time Entries": time_entry_items,
-        }
-    }
+    ticket_sections = OrderedDict()
+    ticket_sections["Ticket Info"] = ticket_info
+    ticket_sections["Messages"] = conversation_items
+    ticket_sections["Time Entries"] = time_entry_items
+
+    return {selected_ticket_number: dict(ticket_sections)}
 
 
 def prompt_for_ticket_review() -> None:
