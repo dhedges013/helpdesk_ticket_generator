@@ -33,6 +33,9 @@ OUTPUT_TICKETS = os.path.join(BASE_DIR, 'results/outputTickets.csv')
 OUTPUT_CONVERSTATIONS = os.path.join(BASE_DIR, 'results/outputConversations.csv')
 OUTPUT_TIME_ENTRIES = os.path.join(BASE_DIR, 'results/outputTimeEntries.csv')
 
+# Feature toggles
+ENABLE_TICKET_REVIEW_PROMPT = True
+
 INITIAL_COMPLAINT = os.path.join(BASE_DIR, 'data/generatorData/initial_complaints.csv')
 CUSTOMER_FOLLOWUP = os.path.join(BASE_DIR, 'data/generatorData/customer_followups.csv')
 HELPDESK_RESPONSE = os.path.join(BASE_DIR, 'data/generatorData/helpdesk_responses.csv')

@@ -3,11 +3,12 @@ from src.utils import append_dict_to_csv
 from src.config import get_logger
 from src.conversations import create_complete_ticket_conversation
 from src.time_entries import generate_time_entries
+from src.ticket_review import prompt_for_ticket_review
 
 logger = get_logger(__name__)
 
-def main():   
-    
+def main():
+
     try:
         num_tickets = input("Enter the number of tickets to generate: ")
         if not num_tickets.isdigit() or int(num_tickets) <= 0:
@@ -96,6 +97,8 @@ def main():
             print(f"{len(tickets_list)} tickets successfully saved")
             if time_entries_list:
                 print(f"{len(time_entries_list)} time entries successfully saved")
+
+            prompt_for_ticket_review()
 
         except Exception as e:
             logger.error(f"Error processing dictionaries: {e}", exc_info=True)
