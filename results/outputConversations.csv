@@ -1,13 +1,19 @@
 Customer,Ticket Number,speaker,message,timestamp
-Advanced Landscaping Company,3459,Charles Weber,URGENT: The system is experiencing frequent lag.,2025-02-21 01:55:15.751652
-Advanced Landscaping Company,3459,Daniel Hedges,Reset your network settings.,2025-02-21 02:05:15.751652
-Advanced Landscaping Company,3459,Charles Weber,I tried restarting my computer,2025-02-21 02:10:15.751652
-Advanced Landscaping Company,3459,Daniel Hedges,Clear your DNS cache.,2025-02-21 02:15:15.751652
-Advanced Landscaping Company,3459,Charles Weber,The printer is still not printing after following your advice.,2025-02-21 02:20:15.751652
-Advanced Landscaping Company,3459,Daniel Hedges,Reboot your router.,2025-02-21 02:25:15.751652
-Advanced Landscaping Company,3459,Charles Weber,The issue reoccurred despite trying your solution.,2025-02-21 02:30:15.751652
-Advanced Landscaping Company,3459,Daniel Hedges,Contact IT support if the issue persists.,2025-02-21 02:35:15.751652
-Advanced Landscaping Company,3459,Charles Weber,I double-checked the connections,2025-02-21 02:40:15.751652
-Advanced Landscaping Company,3459,Daniel Hedges,Try unplugging and plugging back in the device.,2025-02-21 02:45:15.751652
-Advanced Landscaping Company,3459,Charles Weber,The screen remains black even after the restart.,2025-02-21 02:50:15.751652
-Advanced Landscaping Company,3459,Daniel Hedges,Verify that your device is properly connected to the network.,2025-02-21 02:55:15.751652
+Tech Non-Profit Organization,5776,Mark Sherman,Attention: My computer freezes during startup.,2025-09-06 03:04:45.004587
+Tech Non-Profit Organization,5776,Tim the Tech,Check the paper tray for jams.,2025-09-06 03:14:45.004587
+Tech Non-Profit Organization,5776,Mark Sherman,I rebooted my router as well,2025-09-06 03:59:45.004587
+Tech Non-Profit Organization,5776,Tim the Tech,Confirm that all necessary services are running.,2025-09-06 04:04:45.004587
+Reliable Real Estate,2240,Michael Thompson,URGENT: The laptop fan is unusually loud.,2024-11-28 02:31:03.028035
+Reliable Real Estate,2240,Daniel Hedges,Try unplugging and plugging back in the device.,2024-12-10 14:41:03.028035
+Reliable Real Estate,2240,Michael Thompson,I ensured that all cables are connected properly,2025-02-12 12:21:03.028035
+Reliable Real Estate,2240,Daniel Hedges,Clear temporary files.,2025-07-28 03:09:21.948498
+Tech Security Firm,1848,Kimberly Johnson,HELP: I am getting an access denied error.,2025-03-12 03:03:50.078927
+Tech Security Firm,1848,Daniel Hedges,Reset your network settings.,2025-04-02 13:58:50.078927
+Tech Security Firm,1848,Kimberly Johnson,The blue screen error reoccurred after I restarted my computer.,2025-04-25 00:08:50.078927
+Tech Security Firm,1848,Daniel Hedges,Reset your network settings.,2025-05-03 05:16:42.032529
+Premier Managed Service,5912,Rachel Mclaughlin,Attention: My laptop's Wi-Fi adapter is not working.,2025-06-07 13:31:39.491351
+Premier Managed Service,5912,Tim the Tech,Contact IT support if the issue persists.,2025-07-03 07:21:39.491351
+Premier Managed Service,5912,Rachel Mclaughlin,I reinstalled the application,2025-07-07 08:31:39.491351
+Premier Managed Service,5912,Tim the Tech,Disconnect other USB devices.,2025-07-13 04:46:39.491351
+Premier Managed Service,5912,Rachel Mclaughlin,I followed all your suggestions,2025-07-14 13:31:39.491351
+Premier Managed Service,5912,Tim the Tech,Reset the printer by turning it off and on again.,2025-07-25 20:04:42.508828

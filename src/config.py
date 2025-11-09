@@ -2,6 +2,16 @@ import os
 import logging
 from datetime import datetime
 
+DAYS_AGO = 365
+MAX_CONVERSATION_ROUNDS = 7
+
+TIME_ENTRY_MIN_COUNT = 0
+TIME_ENTRY_MAX_COUNT = 4
+TIME_ENTRY_MIN_DURATION_MINUTES = 15
+TIME_ENTRY_MAX_DURATION_MINUTES = 120
+TIME_ENTRY_DURATION_INTERVAL_MINUTES = 5
+
+
 # Define base directory for generator data
 BASE_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')
@@ -17,16 +27,17 @@ TICKET_PRIORITY = os.path.join(BASE_DIR, 'data/generatorData/ticketPriorities.cs
 TICKET_STATUS = os.path.join(BASE_DIR, 'data/generatorData/ticketStatus.csv')
 TICKET_SUBJECT = os.path.join(BASE_DIR, 'data/generatorData/ticketSubject.csv')
 TICKET_TECH = os.path.join(BASE_DIR, 'data/generatorData/ticketTech.csv')
+TIME_ENTRY_LABOR_TYPES = os.path.join(BASE_DIR, 'data/generatorData/timeEntryLaborTypes.csv')
+TIME_ENTRY_NOTE_TEMPLATES = os.path.join(BASE_DIR, 'data/generatorData/timeEntryNoteTemplates.csv')
 OUTPUT_TICKETS = os.path.join(BASE_DIR, 'results/outputTickets.csv')
 OUTPUT_CONVERSTATIONS = os.path.join(BASE_DIR, 'results/outputConversations.csv')
+OUTPUT_TIME_ENTRIES = os.path.join(BASE_DIR, 'results/outputTimeEntries.csv')
 
 INITIAL_COMPLAINT = os.path.join(BASE_DIR, 'data/generatorData/initial_complaints.csv')
 CUSTOMER_FOLLOWUP = os.path.join(BASE_DIR, 'data/generatorData/customer_followups.csv')
 HELPDESK_RESPONSE = os.path.join(BASE_DIR, 'data/generatorData/helpdesk_responses.csv')
 
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
-DAYS_AGO = 365
-MAX_CONVERSATION_ROUNDS = 7
 
 def get_logger(name):
     logger = logging.getLogger(name)

@@ -5,10 +5,20 @@ import os
 from datetime import datetime
 
 from .config import (
-    TICKET_CONTACTS, TICKET_CUSTOMER, TICKET_DESCRIPTION,
-    TICKET_ISSUE_TYPES, TICKET_PRIORITY, TICKET_STATUS,
-    TICKET_SUBJECT, TICKET_TECH, OUTPUT_TICKETS, OUTPUT_CONVERSTATIONS,
-    get_logger
+    TICKET_CONTACTS,
+    TICKET_CUSTOMER,
+    TICKET_DESCRIPTION,
+    TICKET_ISSUE_TYPES,
+    TICKET_PRIORITY,
+    TICKET_STATUS,
+    TICKET_SUBJECT,
+    TICKET_TECH,
+    TIME_ENTRY_LABOR_TYPES,
+    TIME_ENTRY_NOTE_TEMPLATES,
+    OUTPUT_TICKETS,
+    OUTPUT_CONVERSTATIONS,
+    OUTPUT_TIME_ENTRIES,
+    get_logger,
 )
 
 logger = get_logger(__name__)
@@ -37,72 +47,51 @@ def load_csv_data(file_path):
         logging.error(f"Unexpected error loading file {file_path}: {e}")
         return []
 
-def append_dict_to_csv(ticket_data,conversation_data):
-    """
-    Appends a dictionary to a CSV file with keys as column headers and values as rows.
-    
-    :param data_dict: Dictionary where keys are column names and values are lists of row data.
-    :param file_path: Path to the CSV file.
-    """
+def _append_dataset_to_csv(data_dict, file_path, dataset_name, required=False):
+    """Helper to persist a dataset to CSV while validating structure."""
+
+    if not data_dict:
+        message = (
+            f"Error Creating CSV: The {dataset_name} dictionary is empty."
+            if required
+            else f"No {dataset_name} data provided for CSV export. Skipping."
+        )
+        (logging.error if required else logging.info)(message)
+        return
+
     try:
-        if not ticket_data:
-            logging.error("Error Creating CSV: The Ticket dictionary is empty.")
-            return
+        min_length = min(len(v) for v in data_dict.values())
+    except ValueError:
+        logging.error(f"Error Creating CSV: The {dataset_name} dictionary is empty.")
+        return
+    except Exception as exc:
+        logging.error(f"Error preparing {dataset_name} data for CSV: {exc}")
+        return
 
-        # Ensure all values are lists and have the same length
-        min_length = min(len(v) for v in ticket_data.values())
-        if any(len(v) != min_length for v in ticket_data.values()):
-            logging.error("Error: Dictionary values must have the same length.")
-            return
+    if any(len(v) != min_length for v in data_dict.values()):
+        logging.error("Error: Dictionary values must have the same length.")
+        return
 
-        # Check if the file already exists
-        file_exists = os.path.isfile(OUTPUT_TICKETS)
-
-        with open(OUTPUT_TICKETS, mode='a', newline='', encoding='utf-8') as file:
+    try:
+        file_exists = os.path.isfile(file_path)
+        with open(file_path, mode='a', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
-
-            # Write header only if file doesn't exist
             if not file_exists:
-                writer.writerow(ticket_data.keys())
-
-            # Append rows
-            for row in zip(*ticket_data.values()):
+                writer.writerow(data_dict.keys())
+            for row in zip(*data_dict.values()):
                 writer.writerow(row)
 
-        logging.info(f"Successfully appended to CSV file: {OUTPUT_TICKETS}")
-    
-    except Exception as e:
-        logging.error(f"Error appending to CSV: {e}")
-    
-    try:
-        if not conversation_data:
-            logging.error("Error Creating CSV: The Conversation dictionary is empty.")
-            return
+        logging.info(f"Successfully appended {dataset_name} data to CSV file: {file_path}")
+    except Exception as exc:
+        logging.error(f"Error appending {dataset_name} data to CSV: {exc}")
 
-        # Ensure all values are lists and have the same length
-        min_length = min(len(v) for v in conversation_data.values())
-        if any(len(v) != min_length for v in conversation_data.values()):
-            logging.error("Error: Dictionary values must have the same length.")
-            return
 
-        # Check if the file already exists
-        file_exists = os.path.isfile(OUTPUT_CONVERSTATIONS)
+def append_dict_to_csv(ticket_data, conversation_data, time_entry_data=None):
+    """Append ticket, conversation, and optional time-entry data to CSV outputs."""
 
-        with open(OUTPUT_CONVERSTATIONS, mode='a', newline='', encoding='utf-8') as file:
-            writer = csv.writer(file)
-
-            # Write header only if file doesn't exist
-            if not file_exists:
-                writer.writerow(conversation_data.keys())
-
-            # Append rows
-            for row in zip(*conversation_data.values()):
-                writer.writerow(row)
-
-        logging.info(f"Successfully appended to CSV file: {OUTPUT_CONVERSTATIONS}")
-    
-    except Exception as e:
-        logging.error(f"Error appending to CSV: {e}")
+    _append_dataset_to_csv(ticket_data, OUTPUT_TICKETS, "Ticket", required=True)
+    _append_dataset_to_csv(conversation_data, OUTPUT_CONVERSTATIONS, "Conversation", required=True)
+    _append_dataset_to_csv(time_entry_data, OUTPUT_TIME_ENTRIES, "Time entry")
 
 # Retrieve all data from CSV files
 def get_all_contacts():
@@ -160,6 +149,22 @@ def get_all_techs():
     if not techs:
         logging.error("Failed to fetch tech data.")
     return techs
+
+
+def get_all_time_entry_labor_types():
+    logging.debug("Fetching all time entry labor types.")
+    labor_types = load_csv_data(TIME_ENTRY_LABOR_TYPES)
+    if not labor_types:
+        logging.error("Failed to fetch time entry labor type data.")
+    return labor_types
+
+
+def get_all_time_entry_note_templates():
+    logging.debug("Fetching all time entry note templates.")
+    note_templates = load_csv_data(TIME_ENTRY_NOTE_TEMPLATES)
+    if not note_templates:
+        logging.error("Failed to fetch time entry note template data.")
+    return note_templates
 
 # Retrieve random data from CSV files
 def get_random_contact():
