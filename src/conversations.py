@@ -21,6 +21,7 @@ grammar_rules = {
     "helpdesk_response": load_csv_elements(HELPDESK_RESPONSE),
     "greeting": ["HELP", "URGENT", "Attention"]
 }
+
 def generate_ticket_conversation():
     """
     Generates a helpdesk ticket conversation as a single string with newline-separated messages.
@@ -45,6 +46,7 @@ def generate_ticket_conversation():
             conversation_lines.append("Customer: " + customer_msg)
     
     return "\n".join(conversation_lines)
+
 def generate_ticket_conversation_structured():
     """
     Generates a structured helpdesk ticket conversation as a list of dictionaries.
@@ -57,11 +59,11 @@ def generate_ticket_conversation_structured():
         Tuple[List[Dict[str, str]], int]: Conversation list and number of rounds
     """
     random_rounds = random.randint(1, MAX_CONVERSATION_ROUNDS)
-    logger.info(f"Generating ticket conversation with {random_rounds} rounds.")
+    logger.info(f"..... Generating ticket conversation with {random_rounds} rounds.")
 
     grammar = tracery.Grammar(grammar_rules)
     grammar.add_modifiers(base_english)
-    logger.info("Grammar initialized with modifiers.")
+    logger.info("..... Grammar initialized with modifiers.")
 
     conversation = []
 
@@ -111,7 +113,7 @@ def generate_conversation_timestamps(start_time, end_time, number_of_messages):
             return [start_time, end_time]  # Minimum start and end timestamps
         
         total_duration = (end_time - start_time).total_seconds() // 60  # Total minutes
-        max_possible_intervals = total_duration // 1  # Max 5-min intervals available
+        max_possible_intervals = total_duration // 5  # Max 5-min intervals available
 
         logger.info(f"Total duration: {total_duration} minutes. Max possible 5-min intervals: {max_possible_intervals}")
 
@@ -169,24 +171,24 @@ def create_complete_ticket_conversation(ticket):
         end_time = ticket["End Time"]
         
         logger.info(f"Creating conversation for Ticket #{ticket_number}")
-        logger.info(f"Ticket details: Tech - {tech}, Contact - {contact}, Start - {start_time}, End - {end_time}")
+        logger.info(f"..... Ticket details: Tech - {tech}, Contact - {contact}, Start - {start_time}, End - {end_time}")
 
         # Generate conversation and timestamps
         conversation = generate_ticket_conversation_structured()
         
         number_of_messages = len(conversation)
-        logger.info(f"Generated conversation with {number_of_messages} rounds.")
-        logger.info(f"passing {start_time} {end_time} with the number of messages: {number_of_messages}")
+        logger.info(f"..... Generated conversation with {number_of_messages} rounds.")
+        logger.info(f"..... Passing {start_time} {end_time} with the number of messages: {number_of_messages}")
         conversation_timestamps = generate_conversation_timestamps(start_time, end_time, number_of_messages)        
 
         # Ensure timestamps and conversation lengths match
         if len(conversation) != len(conversation_timestamps):
-            logger.error(f"number  of conversation  rounds is {len(conversation)/2}, but there are {len(conversation_timestamps)} timestamps.")
+            logger.error(f"..... Number  of conversation  rounds is {len(conversation)/2}, but there are {len(conversation_timestamps)} timestamps.")
             raise ValueError("Mismatch between conversation messages and timestamps.")       
-        logger.info(f" the type of variable conversation is {type(conversation)}")
+        logger.debug(f"..... The type of variable conversation is {type(conversation)}")
         for index, message in enumerate(conversation):
 
-            logger.info(f"Processing message {index+1}/{len(conversation)}")
+            logger.info(f"..... Processing message {index+1}/{len(conversation)}")
 
             speaker = contact if message["speaker"] == "Customer" else tech
             individual_message = {
@@ -198,9 +200,9 @@ def create_complete_ticket_conversation(ticket):
             }
 
             structured_conversation.append(individual_message)
-            logger.info(f"Added message {index+1}/{len(conversation)} - Speaker: {individual_message['speaker']}, Timestamp: {individual_message['timestamp']}")
+            logger.info(f"..... Added message {index+1}/{len(conversation)} - Speaker: {individual_message['speaker']}, Timestamp: {individual_message['timestamp']}")
 
-        logger.info(f"Completed structured conversation for Ticket #{ticket_number}. Total messages: {len(structured_conversation)}")
+        logger.info(f"..... Completed structured conversation for Ticket #{ticket_number}. Total messages: {len(structured_conversation)}")
 
     except ValueError as ve:
         logger.error(f"ValueError: {ve}")

@@ -7,6 +7,7 @@ from src.time_entries import generate_time_entries
 logger = get_logger(__name__)
 
 def main():   
+    
     try:
         num_tickets = input("Enter the number of tickets to generate: ")
         if not num_tickets.isdigit() or int(num_tickets) <= 0:

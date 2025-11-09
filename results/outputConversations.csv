@@ -1,65 +1,19 @@
 Customer,Ticket Number,speaker,message,timestamp
-Pro Roofing Company,2369,Kevin Alexander,Attention: I have issues with my Bluetooth connectivity.,2025-04-18 01:06:33.877555
-Pro Roofing Company,2369,Tim the Tech,Check the paper tray for jams.,2025-04-28 17:26:33.877555
-Pro Roofing Company,2369,Kevin Alexander,I verified my account credentials and they are valid.,2025-05-10 04:46:33.877555
-Pro Roofing Company,2369,Tim the Tech,Check if your cable connections are secure.,2025-05-24 06:16:33.877555
-Pro Roofing Company,2369,Kevin Alexander,I attempted to access the file from another location,2025-05-27 12:06:33.877555
-Pro Roofing Company,2369,Tim the Tech,Disable and re-enable your network adapter.,2025-06-15 09:11:33.877555
-Pro Roofing Company,2369,Kevin Alexander,The problem still occurs after rebooting.,2025-06-24 18:06:33.877555
-Pro Roofing Company,2369,Tim the Tech,Check for system updates.,2025-06-25 17:21:25.789906
-Reliable Travel Agency,3239,Mr. Matthew Clark PhD,URGENT: I see an overheating warning on my laptop.,2025-07-22 22:14:16.544072
-Reliable Travel Agency,3239,Daniel Hedges,Try using a different USB port.,2025-07-22 22:39:16.544072
-Reliable Travel Agency,3239,Mr. Matthew Clark PhD,I performed a system scan,2025-07-22 22:49:16.544072
-Reliable Travel Agency,3239,Daniel Hedges,Reinstall your printer drivers.,2025-07-22 22:54:16.544072
-Reliable Travel Agency,3239,Mr. Matthew Clark PhD,I checked the software logs,2025-07-22 23:09:16.544072
-Reliable Travel Agency,3239,Daniel Hedges,Verify your network connection.,2025-07-22 23:14:16.544072
-Elite Healthcare Provider,7041,Curtis Morris,URGENT: The application displays a file not found error.,2024-12-28 22:14:42.022267
-Elite Healthcare Provider,7041,Tim the Tech,Check the paper tray for jams.,2025-08-14 21:50:29.378026
-Trusted Car Dealership,6393,Christopher Colon,Attention: I am unable to access secure websites.,2025-03-21 14:29:45.557935
-Trusted Car Dealership,6393,Tim the Tech,Check the paper tray for jams.,2025-03-21 15:04:45.557935
-Trusted Car Dealership,6393,Christopher Colon,I followed all your suggestions,2025-03-21 15:09:45.557935
-Trusted Car Dealership,6393,Tim the Tech,Verify that your device is properly connected to the network.,2025-03-21 15:29:45.557935
-Secure Car Dealership,4173,Julia Barnes,URGENT: I receive constant system error notifications.,2025-04-13 18:06:16.559677
-Secure Car Dealership,4173,Tim the Tech,Check for system updates.,2025-04-15 06:41:16.559677
-Secure Car Dealership,4173,Julia Barnes,I cleared my cache and cookies,2025-05-14 16:11:16.559677
-Secure Car Dealership,4173,Tim the Tech,Reset your password using the recovery tool.,2025-06-27 07:16:16.559677
-Secure Car Dealership,4173,Julia Barnes,I cleared my cache and cookies,2025-08-23 23:41:16.559677
-Secure Car Dealership,4173,Tim the Tech,Confirm the time and date settings on your device.,2025-09-09 16:41:16.559677
-Secure Car Dealership,4173,Julia Barnes,I followed the troubleshooting guide,2025-09-26 12:51:16.559677
-Secure Car Dealership,4173,Tim the Tech,Check for physical damage to cables.,2025-10-11 07:05:12.155528
-Secure Fitness Center,9116,William Santos,Attention: My laptop's power adapter is not recognized.,2025-10-12 02:28:08.941900
-Secure Fitness Center,9116,Tim the Tech,Log out and log back into your account.,2025-10-12 04:03:08.941900
-Secure Fitness Center,9116,William Santos,I tried everything,2025-10-12 04:33:08.941900
-Secure Fitness Center,9116,Tim the Tech,Run a diagnostic tool.,2025-10-12 12:23:08.941900
-Secure Fitness Center,9116,William Santos,I attempted to access the file from another location,2025-10-12 15:58:08.941900
-Secure Fitness Center,9116,Tim the Tech,Try booting in safe mode.,2025-10-12 19:18:08.941900
-Secure Fitness Center,9116,William Santos,I checked for updates,2025-10-12 22:53:08.941900
-Secure Fitness Center,9116,Tim the Tech,Check if the issue occurs on another user account.,2025-10-13 00:28:08.941900
-Secure Fitness Center,9116,William Santos,I double-checked the connections,2025-10-13 01:13:08.941900
-Secure Fitness Center,9116,Tim the Tech,Verify that your VPN is connected properly.,2025-10-13 05:08:08.941900
-Secure Fitness Center,9116,William Santos,I confirmed that my cables are secure,2025-10-13 08:28:08.941900
-Secure Fitness Center,9116,Tim the Tech,Reboot your router.,2025-10-13 15:58:08.941900
-Secure Fitness Center,9116,William Santos,I confirmed that my cables are secure,2025-10-13 22:33:08.941900
-Secure Fitness Center,9116,Tim the Tech,Verify that the correct printer is selected.,2025-10-14 11:45:57.219294
-Global Courier Service,7249,Jessica Cruz,URGENT: My system gives a boot device not found error.,2025-01-01 05:42:29.010993
-Global Courier Service,7249,Tim the Tech,Reset your password using the recovery tool.,2025-01-01 05:47:29.010993
-Global Courier Service,7249,Jessica Cruz,I even contacted a colleague,2025-01-01 05:52:29.010993
-Global Courier Service,7249,Tim the Tech,Run a disk cleanup.,2025-01-01 06:07:29.010993
-Global Courier Service,7249,Jessica Cruz,The screen remains black even after the restart.,2025-01-01 06:12:29.010993
-Global Courier Service,7249,Tim the Tech,Contact IT support if the issue persists.,2025-01-01 06:17:29.010993
-Global Courier Service,7249,Jessica Cruz,I tried a hard reset,2025-01-01 06:22:29.010993
-Global Courier Service,7249,Tim the Tech,Clear your browser cache.,2025-01-01 06:32:29.010993
-Global Courier Service,7249,Jessica Cruz,I tried unplugging and reconnecting the device,2025-01-01 06:37:29.010993
-Global Courier Service,7249,Tim the Tech,Check for physical damage to cables.,2025-01-01 06:42:29.010993
-🦷Dental Dan Dentistry,3631,Robert Obrien,URGENT: My email attachments fail to download.,2025-06-01 08:44:41.307378
-🦷Dental Dan Dentistry,3631,Tim the Tech,Reset your password using the recovery tool.,2025-07-15 21:34:41.307378
-🦷Dental Dan Dentistry,3631,Robert Obrien,I reinstalled the application,2025-07-27 04:14:41.307378
-🦷Dental Dan Dentistry,3631,Tim the Tech,Try reinstalling the application.,2025-07-28 04:04:41.307378
-🦷Dental Dan Dentistry,3631,Robert Obrien,I cleared temporary files and rebooted,2025-07-30 06:59:41.307378
-🦷Dental Dan Dentistry,3631,Tim the Tech,Try unplugging and plugging back in the device.,2025-08-15 16:19:41.307378
-🦷Dental Dan Dentistry,3631,Robert Obrien,I disabled the firewall as you suggested,2025-08-16 08:19:41.307378
-🦷Dental Dan Dentistry,3631,Tim the Tech,Reinstall your printer drivers.,2025-08-23 07:54:41.307378
-🦷Dental Dan Dentistry,3631,Robert Obrien,The problem still occurs after rebooting.,2025-09-28 07:29:41.307378
-🦷Dental Dan Dentistry,3631,Tim the Tech,Try booting in safe mode.,2025-09-28 12:49:41.307378
-🦷Dental Dan Dentistry,3631,Robert Obrien,I reinstalled the drivers,2025-09-29 13:39:41.307378
-🦷Dental Dan Dentistry,3631,Tim the Tech,Verify that your device is properly connected to the network.,2025-09-29 19:32:57.432902
+Tech Non-Profit Organization,5776,Mark Sherman,Attention: My computer freezes during startup.,2025-09-06 03:04:45.004587
+Tech Non-Profit Organization,5776,Tim the Tech,Check the paper tray for jams.,2025-09-06 03:14:45.004587
+Tech Non-Profit Organization,5776,Mark Sherman,I rebooted my router as well,2025-09-06 03:59:45.004587
+Tech Non-Profit Organization,5776,Tim the Tech,Confirm that all necessary services are running.,2025-09-06 04:04:45.004587
+Reliable Real Estate,2240,Michael Thompson,URGENT: The laptop fan is unusually loud.,2024-11-28 02:31:03.028035
+Reliable Real Estate,2240,Daniel Hedges,Try unplugging and plugging back in the device.,2024-12-10 14:41:03.028035
+Reliable Real Estate,2240,Michael Thompson,I ensured that all cables are connected properly,2025-02-12 12:21:03.028035
+Reliable Real Estate,2240,Daniel Hedges,Clear temporary files.,2025-07-28 03:09:21.948498
+Tech Security Firm,1848,Kimberly Johnson,HELP: I am getting an access denied error.,2025-03-12 03:03:50.078927
+Tech Security Firm,1848,Daniel Hedges,Reset your network settings.,2025-04-02 13:58:50.078927
+Tech Security Firm,1848,Kimberly Johnson,The blue screen error reoccurred after I restarted my computer.,2025-04-25 00:08:50.078927
+Tech Security Firm,1848,Daniel Hedges,Reset your network settings.,2025-05-03 05:16:42.032529
+Premier Managed Service,5912,Rachel Mclaughlin,Attention: My laptop's Wi-Fi adapter is not working.,2025-06-07 13:31:39.491351
+Premier Managed Service,5912,Tim the Tech,Contact IT support if the issue persists.,2025-07-03 07:21:39.491351
+Premier Managed Service,5912,Rachel Mclaughlin,I reinstalled the application,2025-07-07 08:31:39.491351
+Premier Managed Service,5912,Tim the Tech,Disconnect other USB devices.,2025-07-13 04:46:39.491351
+Premier Managed Service,5912,Rachel Mclaughlin,I followed all your suggestions,2025-07-14 13:31:39.491351
+Premier Managed Service,5912,Tim the Tech,Reset the printer by turning it off and on again.,2025-07-25 20:04:42.508828
