@@ -76,13 +76,11 @@ def _format_conversations(
     formatted: List[Dict[str, Any]] = []
     for row in conversation_rows:
         formatted.append(
-            OrderedDict(
-                [
-                    ("Speaker", row.get("speaker", "")),
-                    ("Message", row.get("message", "")),
-                    ("Timestamp", _format_timestamp(row.get("timestamp"))),
-                ]
-            )
+            {
+                "Speaker": row.get("speaker", ""),
+                "Message": row.get("message", ""),
+                "Timestamp": _format_timestamp(row.get("timestamp")),
+            }
         )
     return formatted
 
@@ -104,17 +102,15 @@ def _format_time_entries(
             duration_display = duration
 
         formatted.append(
-            OrderedDict(
-                [
-                    ("Tech", row.get("Tech", "")),
-                    ("Duration", duration_display),
-                    ("Visibility", row.get("Visibility", "")),
-                    ("Billable Status", row.get("Billable Status", "")),
-                    ("Labor Type", row.get("Labor Type", "")),
-                    ("Created At", _format_timestamp(row.get("Created At"))),
-                    ("Notes", row.get("Notes", "")),
-                ]
-            )
+            {
+                "Tech": row.get("Tech", ""),
+                "Duration": duration_display,
+                "Visibility": row.get("Visibility", ""),
+                "Billable Status": row.get("Billable Status", ""),
+                "Labor Type": row.get("Labor Type", ""),
+                "Created At": _format_timestamp(row.get("Created At")),
+                "Notes": row.get("Notes", ""),
+            }
         )
     return formatted
 
