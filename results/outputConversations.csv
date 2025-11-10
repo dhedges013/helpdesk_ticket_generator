@@ -1,15 +1,9 @@
 Customer,Ticket Number,speaker,message,timestamp
-🐑 Sam's Sheep and Shearing,1487,Emily Carter,Attention: My system doesn't detect the wireless mouse.,2025-02-03 18:19:13.746305
-🐑 Sam's Sheep and Shearing,1487,Daniel Hedges,Try using a different USB port.,2025-02-09 23:54:13.746305
-🐑 Sam's Sheep and Shearing,1487,Emily Carter,The issue reoccurred despite trying your solution.,2025-02-23 10:44:13.746305
-🐑 Sam's Sheep and Shearing,1487,Daniel Hedges,Contact IT support if the issue persists.,2025-03-03 12:19:13.746305
-🐑 Sam's Sheep and Shearing,1487,Emily Carter,I verified my account details,2025-04-15 17:44:13.746305
-🐑 Sam's Sheep and Shearing,1487,Daniel Hedges,Check if any keys on your keyboard are stuck.,2025-04-16 00:54:13.746305
-🐑 Sam's Sheep and Shearing,1487,Emily Carter,I tried unplugging and reconnecting the device,2025-05-04 15:24:13.746305
-🐑 Sam's Sheep and Shearing,1487,Daniel Hedges,Run a diagnostic tool.,2025-05-06 12:09:13.746305
-🐑 Sam's Sheep and Shearing,1487,Emily Carter,I verified my account details,2025-05-13 07:04:13.746305
-🐑 Sam's Sheep and Shearing,1487,Daniel Hedges,Reset the printer by turning it off and on again.,2025-05-15 04:04:13.746305
-🐑 Sam's Sheep and Shearing,1487,Emily Carter,The blue screen error reoccurred after I restarted my computer.,2025-05-20 17:19:13.746305
-🐑 Sam's Sheep and Shearing,1487,Daniel Hedges,Verify your network connection.,2025-06-09 20:34:13.746305
-🐑 Sam's Sheep and Shearing,1487,Emily Carter,I attempted to update my system,2025-06-15 16:19:13.746305
-🐑 Sam's Sheep and Shearing,1487,Daniel Hedges,Verify your network connection.,2025-06-18 11:05:00.917221
+🐑 Sam's Sheep and Shearing,3554,billing,URGENT: I see a memory allocation error during startup.,2025-10-24 16:59:25.838126
+🐑 Sam's Sheep and Shearing,3554,Tim the Tech,Please restart your computer.,2025-10-24 17:19:25.838126
+🐑 Sam's Sheep and Shearing,3554,billing,I tried using a different browser,2025-10-24 17:29:25.838126
+🐑 Sam's Sheep and Shearing,3554,Tim the Tech,Ensure that your firewall is not blocking the application.,2025-10-24 17:34:25.838126
+🐑 Sam's Sheep and Shearing,3554,billing,I verified my account credentials and they are valid.,2025-10-24 17:39:25.838126
+🐑 Sam's Sheep and Shearing,3554,Tim the Tech,Restart your application.,2025-10-24 17:44:25.838126
+🐑 Sam's Sheep and Shearing,3554,billing,I ensured that all cables are connected properly,2025-10-24 17:49:25.838126
+🐑 Sam's Sheep and Shearing,3554,Tim the Tech,Check your audio settings.,2025-10-24 17:59:25.838126

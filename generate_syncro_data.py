@@ -15,8 +15,8 @@ except Exception:  # pragma: no cover - fallback for standalone execution
 HEADERS = [
     "ticket customer",
     "ticket number",
-    "Tech",
-    "End User",
+    "tech",
+    "end user",
     "ticket subject",
     "ticket description",
     "ticket response",

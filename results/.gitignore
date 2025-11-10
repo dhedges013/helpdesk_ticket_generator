@@ -6,3 +6,5 @@ results/outputTimeEntries.csv
 outputTimeEntries.csv
 results/outputTickets.csv
 outputTickets.csv
+syncro_combined.csv
+outputConversations.csv
