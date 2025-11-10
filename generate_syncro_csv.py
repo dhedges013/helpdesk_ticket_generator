@@ -87,11 +87,11 @@ def build_output_row(
     return {
         "ticket customer": ticket_customer,
         "ticket number": ticket_number,
-        "Tech": select_first(
+        "tech": select_first(
             ticket_row.get("Assigned Tech") if ticket_row else None,
             conversation_row.get("speaker") if conversation_row else None,
         ),
-        "End User": select_first(
+        "end user": select_first(
             ticket_row.get("Contact") if ticket_row else None,
             conversation_row.get("speaker") if conversation_row else None,
         ),
