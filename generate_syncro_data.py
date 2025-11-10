@@ -15,7 +15,8 @@ except Exception:  # pragma: no cover - fallback for standalone execution
 HEADERS = [
     "ticket customer",
     "ticket number",
-    "user",
+    "Tech",
+    "End User",
     "ticket subject",
     "ticket description",
     "ticket response",
@@ -86,9 +87,13 @@ def build_output_row(
     return {
         "ticket customer": ticket_customer,
         "ticket number": ticket_number,
-        "user": select_first(
+        "Tech": select_first(
+            ticket_row.get("Assigned Tech") if ticket_row else None,
             conversation_row.get("speaker") if conversation_row else None,
+        ),
+        "End User": select_first(
             ticket_row.get("Contact") if ticket_row else None,
+            conversation_row.get("speaker") if conversation_row else None,
         ),
         "ticket subject": select_first(ticket_row.get("Subject") if ticket_row else None),
         "ticket description": select_first(ticket_row.get("Description") if ticket_row else None),
