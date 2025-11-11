@@ -17,6 +17,7 @@ HEADERS = [
     "ticket number",
     "tech",
     "end user",
+    "comment owner",
     "ticket subject",
     "ticket description",
     "ticket response",
@@ -94,6 +95,9 @@ def build_output_row(
         "end user": select_first(
             ticket_row.get("Contact") if ticket_row else None,
             conversation_row.get("speaker") if conversation_row else None,
+        ),
+        "comment owner": select_first(
+            conversation_row.get("speaker") if conversation_row else None
         ),
         "ticket subject": select_first(ticket_row.get("Subject") if ticket_row else None),
         "ticket description": select_first(ticket_row.get("Description") if ticket_row else None),
