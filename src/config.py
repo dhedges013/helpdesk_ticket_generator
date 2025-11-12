@@ -1,15 +1,127 @@
-import os
+import json
 import logging
+import os
 from datetime import datetime
+from typing import Dict
 
-DAYS_AGO = 60
-MAX_CONVERSATION_ROUNDS = 4
+# Path to the JSON configuration file that holds runtime-tunable values.
+CONFIG_FILE = os.path.join(os.path.dirname(__file__), "default_config.json")
 
-TIME_ENTRY_MIN_COUNT = 1
-TIME_ENTRY_MAX_COUNT = 4
-TIME_ENTRY_MIN_DURATION_MINUTES = 5
-TIME_ENTRY_MAX_DURATION_MINUTES = 90
-TIME_ENTRY_DURATION_INTERVAL_MINUTES = 5
+# Defaults for the runtime-configurable knobs that can be tweaked via the CLI.
+RUNTIME_DEFAULTS: Dict[str, int] = {
+    "DAYS_AGO": 21,
+    "MAX_CONVERSATION_ROUNDS": 4,
+    "TIME_ENTRY_MIN_COUNT": 1,
+    "TIME_ENTRY_MAX_COUNT": 4,
+    "TIME_ENTRY_MIN_DURATION_MINUTES": 5,
+    "TIME_ENTRY_MAX_DURATION_MINUTES": 90,
+    "TIME_ENTRY_DURATION_INTERVAL_MINUTES": 5,
+    "DAILY_TICKET_CAP": 10,
+    "TIME_ENTRY_BUFFER_MINUTES": 5,
+}
+
+_runtime_settings: Dict[str, int] = {}
+
+
+def _coerce_int(key: str, value: object) -> int:
+    """Attempt to coerce *value* to an int, falling back to defaults on failure."""
+
+    default_value = RUNTIME_DEFAULTS[key]
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        logging.warning(
+            "Invalid value '%s' for %s. Reverting to default (%s).",
+            value,
+            key,
+            default_value,
+        )
+        return default_value
+
+
+def _normalize_settings(raw_settings: Dict[str, int]) -> Dict[str, int]:
+    """Merge raw settings with defaults and ensure they are valid integers."""
+
+    normalized: Dict[str, int] = {}
+    for key, default_value in RUNTIME_DEFAULTS.items():
+        normalized[key] = _coerce_int(key, raw_settings.get(key, default_value))
+    return normalized
+
+
+def _save_runtime_settings(settings: Dict[str, int]) -> None:
+    """Persist runtime settings to the JSON configuration file."""
+
+    with open(CONFIG_FILE, "w", encoding="utf-8") as config_file:
+        json.dump(settings, config_file, indent=2)
+
+
+def _load_runtime_settings() -> Dict[str, int]:
+    """Load runtime settings from disk, creating the file if necessary."""
+
+    try:
+        with open(CONFIG_FILE, "r", encoding="utf-8") as config_file:
+            file_settings = json.load(config_file)
+    except FileNotFoundError:
+        normalized = dict(RUNTIME_DEFAULTS)
+        _save_runtime_settings(normalized)
+        return normalized
+    except json.JSONDecodeError:
+        logging.warning(
+            "Could not parse %s. Recreating the configuration file with defaults.",
+            CONFIG_FILE,
+        )
+        normalized = dict(RUNTIME_DEFAULTS)
+        _save_runtime_settings(normalized)
+        return normalized
+
+    return _normalize_settings(file_settings)
+
+
+def _apply_runtime_settings(settings: Dict[str, int]) -> None:
+    """Update module-level variables to reflect the latest runtime settings."""
+
+    global _runtime_settings
+    global DAYS_AGO
+    global MAX_CONVERSATION_ROUNDS
+    global TIME_ENTRY_MIN_COUNT
+    global TIME_ENTRY_MAX_COUNT
+    global TIME_ENTRY_MIN_DURATION_MINUTES
+    global TIME_ENTRY_MAX_DURATION_MINUTES
+    global TIME_ENTRY_DURATION_INTERVAL_MINUTES
+    global DAILY_TICKET_CAP
+    global TIME_ENTRY_BUFFER_MINUTES
+
+    _runtime_settings = settings
+    DAYS_AGO = settings["DAYS_AGO"]
+    MAX_CONVERSATION_ROUNDS = settings["MAX_CONVERSATION_ROUNDS"]
+    TIME_ENTRY_MIN_COUNT = settings["TIME_ENTRY_MIN_COUNT"]
+    TIME_ENTRY_MAX_COUNT = settings["TIME_ENTRY_MAX_COUNT"]
+    TIME_ENTRY_MIN_DURATION_MINUTES = settings["TIME_ENTRY_MIN_DURATION_MINUTES"]
+    TIME_ENTRY_MAX_DURATION_MINUTES = settings["TIME_ENTRY_MAX_DURATION_MINUTES"]
+    TIME_ENTRY_DURATION_INTERVAL_MINUTES = settings["TIME_ENTRY_DURATION_INTERVAL_MINUTES"]
+    DAILY_TICKET_CAP = settings["DAILY_TICKET_CAP"]
+    TIME_ENTRY_BUFFER_MINUTES = settings["TIME_ENTRY_BUFFER_MINUTES"]
+
+
+def get_runtime_settings() -> Dict[str, int]:
+    """Return a copy of the runtime settings currently in effect."""
+
+    return dict(_runtime_settings)
+
+
+def update_runtime_settings(overrides: Dict[str, int]) -> Dict[str, int]:
+    """Merge overrides into the runtime settings, persist them, and return the result."""
+
+    merged = dict(_runtime_settings)
+    merged.update(overrides)
+    normalized = _normalize_settings(merged)
+    _save_runtime_settings(normalized)
+    _apply_runtime_settings(normalized)
+    return get_runtime_settings()
+
+
+# Initialize runtime settings on import.
+_apply_runtime_settings(_load_runtime_settings())
 
 
 # Define base directory for generator data
@@ -49,6 +161,7 @@ def get_logger(name):
     # Create a new log file with the current date and time
     log_file_name = f"app_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
     log_file_path = os.path.join(LOG_DIR, log_file_name)
+    os.makedirs(LOG_DIR, exist_ok=True)
 
     # File handler with UTF-8 encoding
     file_handler = logging.FileHandler(log_file_path, encoding="utf-8")

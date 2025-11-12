@@ -1,0 +1,7 @@
+{
+  "clear_results": true,
+  "clear_logs": true,
+  "run_generator": true,
+  "num_tickets": 2,
+  "review_completed_ticket": true
+}

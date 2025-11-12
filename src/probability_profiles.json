@@ -1,0 +1,62 @@
+{
+  "default_profile": "balanced_remote",
+  "profiles": {
+    "balanced_remote": {
+      "issue_type": {
+        "Helpdesk": 5,
+        "Request": 3,
+        "Incident": 2,
+        "Onsite": 1,
+        "Move Add Change": 2,
+        "Engineering": 0,
+        "Networking": 0,
+        "VIP": 0,
+        "__default__": 1
+      },
+      "priority": {
+        "Urgent": 1,
+        "High": 2,
+        "Medium": 3,
+        "Low": 4,
+        "__default__": 1
+      },
+      "status": {
+        "New": 4,
+        "In Progress": 3,
+        "Scheduled": 2,
+        "Waiting on Customer": 2,
+        "__default__": 1
+      },
+      "subject": {
+        "__default__": 1
+      }
+    },
+    "onsite_specialist": {
+      "issue_type": {
+        "Onsite": 6,
+        "Move Add Change": 4,
+        "Networking": 4,
+        "Engineering": 2,
+        "__default__": 1
+      },
+      "priority": {
+        "Urgent": 2,
+        "High": 3,
+        "Medium": 2,
+        "Low": 1,
+        "__default__": 1
+      },
+      "status": {
+        "Scheduled": 4,
+        "In Progress": 3,
+        "__default__": 1
+      }
+    }
+  },
+  "tech_profiles": {
+    "Tim the Tech": "onsite_specialist",
+    "Daniel Hedges": "balanced_remote",
+    "Lindsey Syncro": "balanced_remote"
+  },
+  "customer_profiles": {}
+}

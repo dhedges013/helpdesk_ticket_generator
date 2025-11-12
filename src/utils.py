@@ -3,6 +3,7 @@ import csv
 import random
 import os
 from datetime import datetime
+from typing import Optional, Sequence
 
 from .config import (
     TICKET_CONTACTS,
@@ -20,8 +21,24 @@ from .config import (
     OUTPUT_TIME_ENTRIES,
     get_logger,
 )
+from .probability import ProbabilityProfile
 
 logger = get_logger(__name__)
+
+
+def _weighted_choice(category: str, values: Sequence[str], profile: Optional[ProbabilityProfile]) -> Optional[str]:
+    """Return a weighted selection using the provided profile, if any."""
+
+    filtered = [value for value in values if value]
+    if not filtered:
+        return None
+
+    if profile:
+        selection = profile.pick(category, filtered)
+        if selection:
+            return selection
+
+    return random.choice(filtered)
 
 # Base function to load data from a CSV file
 def load_csv_data(file_path):
@@ -209,58 +226,58 @@ def get_random_description():
         logging.error(f"Error selecting random description: {e}")
         return None
 
-def get_random_issue_type():
+def get_random_issue_type(profile: Optional[ProbabilityProfile] = None):
     try:
         issue_types = get_all_issue_types()
         if issue_types:
-            issue_type = random.choice(issue_types)
-            logging.info(f"Random issue type selected: {issue_type}")
-            return issue_type
-        else:
-            logging.error("Error: No issue types available.")
-            return None
+            issue_type = _weighted_choice("issue_type", issue_types, profile)
+            if issue_type:
+                logging.info(f"Random issue type selected: {issue_type}")
+                return issue_type
+        logging.error("Error: No issue types available.")
+        return None
     except Exception as e:
         logging.error(f"Error selecting random issue type: {e}")
         return None
 
-def get_random_priority():
+def get_random_priority(profile: Optional[ProbabilityProfile] = None):
     try:
         priorities = get_all_priorities()
         if priorities:
-            priority = random.choice(priorities)
-            logging.info(f"Random priority selected: {priority}")
-            return priority
-        else:
-            logging.error("Error: No priorities available.")
-            return None
+            priority = _weighted_choice("priority", priorities, profile)
+            if priority:
+                logging.info(f"Random priority selected: {priority}")
+                return priority
+        logging.error("Error: No priorities available.")
+        return None
     except Exception as e:
         logging.error(f"Error selecting random priority: {e}")
         return None
 
-def get_random_status():
+def get_random_status(profile: Optional[ProbabilityProfile] = None):
     try:
         statuses = get_all_statuses()
         if statuses:
-            status = random.choice(statuses)
-            logging.info(f"Random status selected: {status}")
-            return status
-        else:
-            logging.error("Error: No statuses available.")
-            return None
+            status = _weighted_choice("status", statuses, profile)
+            if status:
+                logging.info(f"Random status selected: {status}")
+                return status
+        logging.error("Error: No statuses available.")
+        return None
     except Exception as e:
         logging.error(f"Error selecting random status: {e}")
         return None
 
-def get_random_subject():
+def get_random_subject(profile: Optional[ProbabilityProfile] = None):
     try:
         subjects = get_all_subjects()
         if subjects:
-            subject = random.choice(subjects)
-            logging.info(f"Random subject selected: {subject}")
-            return subject
-        else:
-            logging.error("Error: No subjects available.")
-            return None
+            subject = _weighted_choice("subject", subjects, profile)
+            if subject:
+                logging.info(f"Random subject selected: {subject}")
+                return subject
+        logging.error("Error: No subjects available.")
+        return None
     except Exception as e:
         logging.error(f"Error selecting random subject: {e}")
         return None
