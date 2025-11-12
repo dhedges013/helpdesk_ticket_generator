@@ -1,33 +1,42 @@
+from src import preferences
 from src.generate_ticket_data import generate_ticket
 from src.utils import append_dict_to_csv
 from src.config import get_logger
 from src.conversations import create_complete_ticket_conversation
 from src.time_entries import generate_time_entries
 from src.ticket_review import prompt_for_ticket_review
+from src.generation_context import GenerationContext
 
 logger = get_logger(__name__)
 
 def main():
 
     try:
-        num_tickets = input("Enter the number of tickets to generate: ")
-        if not num_tickets.isdigit() or int(num_tickets) <= 0:
-            print("Invalid input. Please enter a positive integer.")
-            return        
-
-        num_tickets = int(num_tickets)
+        stored_tickets = preferences.get_int("num_tickets")
+        if stored_tickets and stored_tickets > 0:
+            num_tickets = stored_tickets
+            print(f"Enter the number of tickets to generate: {num_tickets} (remembered).")
+        else:
+            num_tickets_input = input("Enter the number of tickets to generate: ").strip()
+            if not num_tickets_input.isdigit() or int(num_tickets_input) <= 0:
+                print("Invalid input. Please enter a positive integer.")
+                return
+            num_tickets = int(num_tickets_input)
+            preferences.remember_int("num_tickets", num_tickets)
+        context = GenerationContext()
         tickets_list = []
         conversations_list = []
         time_entries_list = []
 
         for _ in range(num_tickets):
             try:
-                ticket = generate_ticket()
+                ticket = generate_ticket(context)
                 if ticket is None:
                     logger.error("Failed to generate a ticket. Skipping...")
                     continue  # Skip instead of stopping
 
                 logger.info(f"Generated ticket: {ticket}")
+                ticket = context.validate_ticket(ticket)
                 tickets_list.append(ticket)
 
                 conversation = create_complete_ticket_conversation(ticket)
@@ -39,6 +48,7 @@ def main():
                 conversations_list.extend(conversation)  # Flatten list
 
                 time_entries = generate_time_entries(ticket)
+                time_entries = context.validate_time_entries(ticket, time_entries)
                 if time_entries:
                     logger.info(
                         "Generated %s time entries for Ticket #%s",
@@ -69,12 +79,12 @@ def main():
 
         # Convert lists to dictionaries
         try:
-            ticket_dict = {key: [ticket[key] for ticket in tickets_list] for key in tickets_list[0].keys()}
+            ticket_dict = {key: [ticket.get(key, "") for ticket in tickets_list] for key in tickets_list[0].keys()}
             logger.info("Converted tickets to dictionary format.")
 
             # Handle conversations properly
             if isinstance(conversations_list, list) and all(isinstance(item, dict) for item in conversations_list):
-                conversations_dict = {key: [conversation[key] for conversation in conversations_list] for key in conversations_list[0].keys()}
+                conversations_dict = {key: [conversation.get(key, "") for conversation in conversations_list] for key in conversations_list[0].keys()}
                 logger.info("Converted conversations to dictionary format.")
             else:
                 logger.error("Unexpected structure in conversations_list.")
@@ -84,7 +94,7 @@ def main():
             if time_entries_list:
                 if all(isinstance(item, dict) for item in time_entries_list):
                     time_entries_dict = {
-                        key: [entry[key] for entry in time_entries_list]
+                        key: [entry.get(key, "") for entry in time_entries_list]
                         for key in time_entries_list[0].keys()
                     }
                     logger.info("Converted time entries to dictionary format.")

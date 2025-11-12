@@ -7,21 +7,14 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from typing import List, Optional, Sequence
 
-from .config import (
-    TIME_ENTRY_DURATION_INTERVAL_MINUTES,
-    TIME_ENTRY_MAX_COUNT,
-    TIME_ENTRY_MAX_DURATION_MINUTES,
-    TIME_ENTRY_MIN_COUNT,
-    TIME_ENTRY_MIN_DURATION_MINUTES,
-    get_logger,
-)
+from . import config
 from .utils import (
     get_all_techs,
     get_all_time_entry_labor_types,
     get_all_time_entry_note_templates,
 )
 
-logger = get_logger(__name__)
+logger = config.get_logger(__name__)
 
 
 def _load_labor_types() -> Sequence[str]:
@@ -91,9 +84,9 @@ class TimeEntryRecord:
 def _duration_choices() -> List[int]:
     """Return a list of allowed durations that honour the configured interval."""
 
-    step = max(1, TIME_ENTRY_DURATION_INTERVAL_MINUTES)
-    minimum = max(step, TIME_ENTRY_MIN_DURATION_MINUTES)
-    maximum = max(minimum, TIME_ENTRY_MAX_DURATION_MINUTES)
+    step = max(1, config.TIME_ENTRY_DURATION_INTERVAL_MINUTES)
+    minimum = max(step, config.TIME_ENTRY_MIN_DURATION_MINUTES)
+    maximum = max(minimum, config.TIME_ENTRY_MAX_DURATION_MINUTES)
     return list(range(minimum, maximum + step, step))
 
 
@@ -160,8 +153,8 @@ def generate_time_entries(ticket: dict, prior_entries: Optional[Sequence[dict]] 
         A list of dictionaries representing generated time entries.
     """
 
-    min_count = max(0, TIME_ENTRY_MIN_COUNT)
-    max_count = max(min_count, TIME_ENTRY_MAX_COUNT)
+    min_count = max(0, config.TIME_ENTRY_MIN_COUNT)
+    max_count = max(min_count, config.TIME_ENTRY_MAX_COUNT)
 
     if max_count == 0:
         logger.info("Time entry generation skipped because the maximum count is 0.")
@@ -226,7 +219,7 @@ def generate_time_entries(ticket: dict, prior_entries: Optional[Sequence[dict]] 
         )
         entry_count = max_entries_by_window
 
-    offsets = _generate_offsets(entry_count, start_time, end_time, max(1, TIME_ENTRY_DURATION_INTERVAL_MINUTES))
+    offsets = _generate_offsets(entry_count, start_time, end_time, max(1, config.TIME_ENTRY_DURATION_INTERVAL_MINUTES))
     dependency_source = list(prior_entries) if prior_entries else None
 
     generated_entries: List[dict] = []

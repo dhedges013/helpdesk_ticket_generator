@@ -3,10 +3,10 @@ import csv
 import tracery
 from tracery.modifiers import base_english
 import random
-from .config import MAX_CONVERSATION_ROUNDS, get_logger, BASE_DIR,INITIAL_COMPLAINT,CUSTOMER_FOLLOWUP,HELPDESK_RESPONSE
+from . import config
 from datetime import datetime, timedelta
 
-logger = get_logger(__name__)
+logger = config.get_logger(__name__)
 
 # Helper function to load CSV elements (assumes one phrase per row)
 def load_csv_elements(file_path):
@@ -16,9 +16,9 @@ def load_csv_elements(file_path):
 
 # Load the CSV content into grammar rules
 grammar_rules = {
-    "initial_complaint": load_csv_elements(INITIAL_COMPLAINT),
-    "customer_followup": load_csv_elements(CUSTOMER_FOLLOWUP),
-    "helpdesk_response": load_csv_elements(HELPDESK_RESPONSE),
+    "initial_complaint": load_csv_elements(config.INITIAL_COMPLAINT),
+    "customer_followup": load_csv_elements(config.CUSTOMER_FOLLOWUP),
+    "helpdesk_response": load_csv_elements(config.HELPDESK_RESPONSE),
     "greeting": ["HELP", "URGENT", "Attention"]
 }
 
@@ -30,7 +30,7 @@ def generate_ticket_conversation():
     grammar.add_modifiers(base_english)
     
     conversation_lines = []
-    random_rounds = random.randint(1, MAX_CONVERSATION_ROUNDS)
+    random_rounds = random.randint(1, config.MAX_CONVERSATION_ROUNDS)
     
     # Generate initial customer complaint
     greeting = random.choice(grammar.flatten("#greeting#").split())
@@ -58,7 +58,7 @@ def generate_ticket_conversation_structured():
     Returns:
         Tuple[List[Dict[str, str]], int]: Conversation list and number of rounds
     """
-    random_rounds = random.randint(1, MAX_CONVERSATION_ROUNDS)
+    random_rounds = random.randint(1, config.MAX_CONVERSATION_ROUNDS)
     logger.info(f"..... Generating ticket conversation with {random_rounds} rounds.")
 
     grammar = tracery.Grammar(grammar_rules)

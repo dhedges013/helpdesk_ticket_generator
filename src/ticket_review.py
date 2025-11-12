@@ -10,6 +10,7 @@ from pathlib import Path
 from pprint import pprint
 from typing import Any, Dict, Iterable, List, Optional
 
+from . import preferences
 from .config import (
     ENABLE_TICKET_REVIEW_PROMPT,
     OUTPUT_CONVERSTATIONS,
@@ -165,21 +166,35 @@ def _select_completed_ticket() -> Optional[Dict[str, Any]]:
     return {selected_ticket_number: dict(ticket_sections)}
 
 
+def _display_completed_ticket() -> None:
+    completed_ticket = _select_completed_ticket()
+    if completed_ticket:
+        pprint(completed_ticket)
+    else:
+        print("No completed ticket data available for review.")
+
+
 def prompt_for_ticket_review() -> None:
     """Interactively offer a preview of a completed ticket after generation."""
 
     if not ENABLE_TICKET_REVIEW_PROMPT:
         return
 
+    stored_preference = preferences.get_bool("review_completed_ticket")
+    if isinstance(stored_preference, bool):
+        response_text = "Yes" if stored_preference else "No"
+        print(f"Would you like to review a completed ticket? {response_text} (remembered).")
+        if stored_preference:
+            _display_completed_ticket()
+        return
+
     while True:
         response = input("Would you like to review a completed ticket? (y/n): ").strip().lower()
         if response in {"y", "yes"}:
-            completed_ticket = _select_completed_ticket()
-            if completed_ticket:
-                pprint(completed_ticket)
-            else:
-                print("No completed ticket data available for review.")
+            preferences.remember_bool("review_completed_ticket", True)
+            _display_completed_ticket()
             break
         if response in {"n", "no"}:
+            preferences.remember_bool("review_completed_ticket", False)
             break
         print("Please enter 'y' or 'n'.")

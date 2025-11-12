@@ -1,20 +1,30 @@
 import logging
-from datetime import datetime, timedelta
 import random
-from .config import DAYS_AGO, get_logger
+from datetime import datetime, timedelta
+from typing import Optional
+
+from . import config
+from .generation_context import GenerationContext
+from .probability import get_registry, ProbabilityProfile
 from .utils import (
-    get_random_contact, get_random_customer, get_random_description,
-    get_random_issue_type, get_random_priority, get_random_status,
-    get_random_subject, get_random_tech
+    get_random_contact,
+    get_random_customer,
+    get_random_description,
+    get_random_issue_type,
+    get_random_priority,
+    get_random_status,
+    get_random_subject,
+    get_random_tech,
 )
 
-logger = get_logger(__name__)
+logger = config.get_logger(__name__)
+PROFILE_REGISTRY = get_registry()
 
 # Generate a random datetime within the past week
 def generate_random_datetime():
     try:
         now = datetime.now()
-        past_time = now - timedelta(days=DAYS_AGO)
+        past_time = now - timedelta(days=config.DAYS_AGO)
         random_datetime = past_time + (now - past_time) * random.random()
         logging.debug(f"Generated random datetime: {random_datetime}")
         return random_datetime
@@ -32,7 +42,13 @@ def generate_random_ticket_number():
         logging.error(f"Error generating random ticket number: {e}")
         return None
     
-def generate_ticket():
+def _resolve_profile(customer: Optional[str], tech: Optional[str], context: Optional[GenerationContext]) -> ProbabilityProfile:
+    if context:
+        return context.resolve_profile(customer=customer, tech=tech)
+    return PROFILE_REGISTRY.resolve_profile(customer=customer, tech=tech)
+
+
+def generate_ticket(context: Optional[GenerationContext] = None):
     # Ticket class or function to generate a ticket
     logging.debug("Starting ticket generation.")
     try:
@@ -48,35 +64,37 @@ def generate_ticket():
             logging.warning("No customer generated. Setting default.")
             customer = "Unknown Customer"
 
+        tech = get_random_tech()
+        if not tech:
+            logging.warning("No tech generated. Setting default.")
+            tech = "Unassigned"
+
         description = get_random_description()
         if not description:
             logging.warning("No description generated. Setting default.")
             description = "No description provided."
 
-        issue_type = get_random_issue_type()
+        profile = _resolve_profile(customer, tech, context)
+
+        issue_type = get_random_issue_type(profile)
         if not issue_type:
             logging.warning("No issue type generated. Setting default.")
             issue_type = "General Inquiry"
 
-        priority = get_random_priority()
+        priority = get_random_priority(profile)
         if not priority:
             logging.warning("No priority generated. Setting default.")
             priority = "Low"
 
-        status = get_random_status()
+        status = get_random_status(profile)
         if not status:
             logging.warning("No status generated. Setting default.")
             status = "Open"
 
-        subject = get_random_subject()
+        subject = get_random_subject(profile)
         if not subject:
             logging.warning("No subject generated. Setting default.")
             subject = "General Issue"
-
-        tech = get_random_tech()
-        if not tech:
-            logging.warning("No tech generated. Setting default.")
-            tech = "Unassigned"
 
         start_time = generate_random_datetime()
         end_time = generate_random_datetime()
