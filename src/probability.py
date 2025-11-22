@@ -52,10 +52,13 @@ def _load_tech_names(path: str) -> List[str]:
 
 @dataclass(frozen=True)
 class ProbabilityProfile:
-    """Collection of weighting rules grouped by category."""
+    """Collection of weighting rules grouped by category plus closure heuristics."""
 
     name: str
     weights: Dict[str, Dict[str, float]] = field(default_factory=dict)
+    same_day_close_rate: float = 0.25
+    daily_close_rate: float = 0.15
+    max_close_days: int = 14
 
     def weight_for(self, category: str, value: str) -> float:
         category_rules = self.weights.get(category) or {}
@@ -92,11 +95,30 @@ class ProbabilityProfileRegistry:
         if not isinstance(payload, dict):
             payload = {}
 
-        profiles = {
-            name: ProbabilityProfile(name=name, weights=(data or {}))
-            for name, data in payload.items()
-            if isinstance(name, str)
-        }
+        profiles: Dict[str, ProbabilityProfile] = {}
+        for name, data in payload.items():
+            if not isinstance(name, str):
+                continue
+            if not isinstance(data, dict):
+                data = {}
+
+            same_day_rate = float(data.get("same_day_close_rate", 0.25))
+            daily_rate = float(data.get("daily_close_rate", 0.15))
+            max_close_days = int(data.get("max_close_days", 14))
+
+            weight_categories = {
+                key: value
+                for key, value in data.items()
+                if isinstance(value, dict) and key not in {"close", "close_config"}
+            }
+
+            profiles[name] = ProbabilityProfile(
+                name=name,
+                weights=weight_categories,
+                same_day_close_rate=max(0.0, min(1.0, same_day_rate)),
+                daily_close_rate=max(0.0, min(1.0, daily_rate)),
+                max_close_days=max(1, max_close_days),
+            )
 
         if not profiles:
             profiles["default"] = ProbabilityProfile(name="default", weights={})

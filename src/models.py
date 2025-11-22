@@ -19,6 +19,7 @@ Ticket = TypedDict(
         "Priority": str,
         "Start Time": datetime,
         "End Time": datetime,
+        "Closed At": datetime | None,
     },
 )
 

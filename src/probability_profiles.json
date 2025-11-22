@@ -2,6 +2,9 @@
   "default_profile": "balanced_remote",
   "profiles": {
     "balanced_remote": {
+      "same_day_close_rate": 0.35,
+      "daily_close_rate": 0.25,
+      "max_close_days": 14,
       "issue_type": {
         "Helpdesk": 5,
         "Request": 3,
@@ -32,6 +35,9 @@
       }
     },
     "onsite_specialist": {
+      "same_day_close_rate": 0.25,
+      "daily_close_rate": 0.2,
+      "max_close_days": 21,
       "issue_type": {
         "Onsite": 6,
         "Move Add Change": 4,

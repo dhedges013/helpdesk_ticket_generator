@@ -118,23 +118,39 @@ class MaxOpenTicketsValidator(TicketValidator):
 
         return ticket
 
-    def _increment_open(self, tech: str, start_time: datetime, state: ValidationState) -> None:
-        state.open_tickets_by_tech_day[(tech, start_time.date())] += 1
+    def _occupancy_days(self, start_time: datetime, closed_time: datetime) -> List[date]:
+        start_day = start_time.date()
+        end_day = closed_time.date()
+        if end_day < start_day:
+            end_day = start_day
 
-    def _open_cap(self, tech: str, start_time: datetime, state: ValidationState) -> int:
-        key = (tech, start_time.date())
-        return state.open_tickets_by_tech_day[key]
+        days: List[date] = []
+        current = start_day
+        while current <= end_day:
+            days.append(current)
+            current += timedelta(days=1)
+        return days
 
-    def _select_overflow_tech(self, original: str, day: date, state: ValidationState) -> str:
+    def _increment_open(self, tech: str, days: List[date], state: ValidationState) -> None:
+        for day in days:
+            state.open_tickets_by_tech_day[(tech, day)] += 1
+
+    def _open_cap(self, tech: str, day: date, state: ValidationState) -> int:
+        return state.open_tickets_by_tech_day[(tech, day)]
+
+    def _span_over_cap(self, tech: str, days: List[date], cap: int, state: ValidationState) -> bool:
+        return any(self._open_cap(tech, day, state) >= cap for day in days)
+
+    def _select_overflow_tech(self, original: str, days: List[date], state: ValidationState) -> str:
         for tech in self.available_techs:
             if tech == original:
                 continue
-            if self._open_cap(tech, datetime.combine(day, datetime.min.time()), state) < self.per_tech_cap:
+            if not self._span_over_cap(tech, days, self.per_tech_cap, state):
                 logger.info("Reassigning ticket from %s to %s due to open-cap overflow.", original, tech)
                 return tech
 
-        unassigned_count = self._open_cap("Unassigned", datetime.combine(day, datetime.min.time()), state)
-        if unassigned_count >= self.unassigned_cap:
+        unassigned_over = self._span_over_cap("Unassigned", days, self.unassigned_cap, state)
+        if unassigned_over:
             logger.warning("Unassigned open-cap exceeded; continuing to assign to Unassigned.")
         return "Unassigned"
 
@@ -143,21 +159,24 @@ class MaxOpenTicketsValidator(TicketValidator):
 
         tech = ticket.get("Assigned Tech") or "Unassigned"
         start_time = ticket.get("Start Time")
+        closed_time = ticket.get("Closed At") or start_time
 
-        if not isinstance(start_time, datetime):
+        if not isinstance(start_time, datetime) or not isinstance(closed_time, datetime):
             return ticket
 
-        current_open = self._open_cap(tech, start_time, state)
+        days = self._occupancy_days(start_time, closed_time)
+
+        current_over = self._span_over_cap(tech, days, self.unassigned_cap if tech == "Unassigned" else self.per_tech_cap, state)
         if tech == "Unassigned":
             cap = self.unassigned_cap
         else:
             cap = self.per_tech_cap
 
-        if current_open >= cap:
-            tech = self._select_overflow_tech(tech, start_time.date(), state)
+        if current_over or self._span_over_cap(tech, days, cap, state):
+            tech = self._select_overflow_tech(tech, days, state)
             ticket["Assigned Tech"] = tech
 
-        self._increment_open(tech, start_time, state)
+        self._increment_open(tech, days, state)
         return ticket
 
 

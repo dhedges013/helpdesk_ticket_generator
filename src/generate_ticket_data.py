@@ -42,6 +42,24 @@ def generate_random_ticket_number() -> Optional[int]:
     except Exception as e:
         logging.error(f"Error generating random ticket number: {e}")
         return None
+
+
+def _simulate_closed_at(start_time: datetime, profile: ProbabilityProfile) -> Optional[datetime]:
+    """Derive a closed timestamp based on profile skill and ticket age."""
+
+    now = datetime.now()
+    age_days = max(0, (now.date() - start_time.date()).days)
+
+    if age_days == 0 and random.random() < profile.same_day_close_rate:
+        return min(now, start_time + timedelta(minutes=random.randint(30, 8 * 60)))
+
+    horizon = min(profile.max_close_days, age_days if age_days > 0 else profile.max_close_days)
+    for day in range(1, horizon + 1):
+        if random.random() < profile.daily_close_rate:
+            closed_candidate = start_time + timedelta(days=day, minutes=random.randint(15, 6 * 60))
+            return min(now, closed_candidate)
+
+    return None
     
 def generate_ticket(context: Optional[GenerationContext] = None) -> Optional[Ticket]:
     # Ticket class or function to generate a ticket
@@ -108,18 +126,30 @@ def generate_ticket(context: Optional[GenerationContext] = None) -> Optional[Tic
             logging.warning(f"End time {end_time} is before start time {start_time}. Adjusting end time.")
             end_time = start_time + timedelta(hours=1)
 
+        closed_at = _simulate_closed_at(start_time, tech_profile)
+        if isinstance(end_time, datetime) and isinstance(closed_at, datetime):
+            effective_end = min(end_time, closed_at)
+        elif isinstance(end_time, datetime):
+            effective_end = end_time
+        else:
+            effective_end = closed_at
+
+        if isinstance(closed_at, datetime) and closed_at <= datetime.now():
+            status = "Resolved"
+
         ticket: Ticket = {
             "Customer": customer,
             "Ticket Number": ticket_number,
             "Contact": contact,
             "Subject": subject,
-            "Status": status,         
+            "Status": status,
             "Description": description,
             "Issue Type": issue_type,
             "Assigned Tech": tech,
             "Priority": priority,                        
             "Start Time": start_time,
-            "End Time": end_time
+            "End Time": effective_end,
+            "Closed At": closed_at,
         }
 
         logging.info(f"Ticket generated successfully: {ticket}")
