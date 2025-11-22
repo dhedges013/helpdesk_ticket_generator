@@ -16,6 +16,7 @@ from .utils import (
     get_random_subject,
     get_random_tech,
 )
+from .models import Ticket
 
 logger = config.get_logger(__name__)
 PROFILE_REGISTRY = get_registry()
@@ -34,7 +35,7 @@ def generate_random_datetime():
 
 
 
-def generate_random_ticket_number():
+def generate_random_ticket_number() -> Optional[int]:
     try:
         logging.debug("Generating random ticket number.")
         return random.randint(1000, 9999)
@@ -42,7 +43,7 @@ def generate_random_ticket_number():
         logging.error(f"Error generating random ticket number: {e}")
         return None
     
-def generate_ticket(context: Optional[GenerationContext] = None):
+def generate_ticket(context: Optional[GenerationContext] = None) -> Optional[Ticket]:
     # Ticket class or function to generate a ticket
     logging.debug("Starting ticket generation.")
     try:
@@ -107,7 +108,7 @@ def generate_ticket(context: Optional[GenerationContext] = None):
             logging.warning(f"End time {end_time} is before start time {start_time}. Adjusting end time.")
             end_time = start_time + timedelta(hours=1)
 
-        ticket = {            
+        ticket: Ticket = {
             "Customer": customer,
             "Ticket Number": ticket_number,
             "Contact": contact,

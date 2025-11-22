@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import logging
 from datetime import datetime
 from pathlib import Path
 from typing import Iterable, Mapping, MutableMapping
@@ -11,6 +12,9 @@ try:
     from src import config as app_config  # type: ignore
 except Exception:  # pragma: no cover - fallback for standalone execution
     app_config = None
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 HEADERS = [
@@ -190,6 +194,44 @@ def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
             writer.writerow(row)
 
 
+def load_inputs(tickets_path: Path, conversations_path: Path) -> tuple[list[MutableMapping[str, str]], list[MutableMapping[str, str]]]:
+    """Load ticket and conversation CSVs from disk."""
+
+    if not tickets_path.exists():
+        raise FileNotFoundError(f"Ticket CSV not found: {tickets_path}")
+    if not conversations_path.exists():
+        raise FileNotFoundError(f"Conversation CSV not found: {conversations_path}")
+
+    tickets_rows = read_csv_rows(tickets_path)
+    conversation_rows = read_csv_rows(conversations_path)
+    return tickets_rows, conversation_rows
+
+
+def merge_syncro_rows(
+    tickets_rows: Iterable[Mapping[str, str]],
+    conversation_rows: Iterable[Mapping[str, str]],
+) -> list[dict[str, str]]:
+    """Public wrapper to combine ticket and conversation rows."""
+
+    return combine_data(tickets_rows, conversation_rows)
+
+
+def write_syncro_csv(output_path: Path, rows: list[dict[str, str]]) -> None:
+    """Persist merged rows to the Syncro-formatted CSV."""
+
+    write_csv(output_path, rows)
+
+
+def run(tickets_path: Path, conversations_path: Path, output_path: Path) -> int:
+    """Execute the merge workflow and return an exit code."""
+
+    tickets_rows, conversation_rows = load_inputs(tickets_path, conversations_path)
+    combined_rows = merge_syncro_rows(tickets_rows, conversation_rows)
+    write_syncro_csv(output_path, combined_rows)
+    LOGGER.info("Combined %s rows into %s", len(combined_rows), output_path)
+    return 0
+
+
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments."""
 
@@ -223,23 +265,15 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     """Entry point for generating the combined Syncro CSV file."""
 
+    if not logging.getLogger().hasHandlers():
+        logging.basicConfig(level=logging.INFO)
+
     args = parse_args()
 
     try:
-        if not args.tickets.exists():
-            raise FileNotFoundError(f"Ticket CSV not found: {args.tickets}")
-        if not args.conversations.exists():
-            raise FileNotFoundError(f"Conversation CSV not found: {args.conversations}")
-
-        tickets_rows = read_csv_rows(args.tickets)
-        conversation_rows = read_csv_rows(args.conversations)
-
-        combined_rows = combine_data(tickets_rows, conversation_rows)
-        write_csv(args.output, combined_rows)
-
-        print(f"Combined {len(combined_rows)} rows into {args.output}")
+        raise SystemExit(run(args.tickets, args.conversations, args.output))
     except Exception as exc:
-        print(f"Failed to generate combined Syncro CSV: {exc}")
+        LOGGER.error("Failed to generate combined Syncro CSV: %s", exc)
         raise SystemExit(1) from exc
 
 

@@ -1,11 +1,11 @@
 from src import preferences
 from src.generate_ticket_data import generate_ticket
-from src.utils import append_dict_to_csv
 from src.config import get_logger
 from src.conversations import create_complete_ticket_conversation
 from src.time_entries import generate_time_entries
 from src.ticket_review import prompt_for_ticket_review
 from src.generation_context import GenerationContext
+from src.storage import write_conversations, write_time_entries, write_tickets
 
 logger = get_logger(__name__)
 
@@ -103,7 +103,9 @@ def main():
                     return
 
             # Save to CSV
-            append_dict_to_csv(ticket_dict, conversations_dict, time_entries_dict)
+            write_tickets(ticket_dict)
+            write_conversations(conversations_dict)
+            write_time_entries(time_entries_dict)
             print(f"{len(tickets_list)} tickets successfully saved")
             if time_entries_list:
                 print(f"{len(time_entries_list)} time entries successfully saved")

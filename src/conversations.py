@@ -5,6 +5,7 @@ from tracery.modifiers import base_english
 import random
 from . import config
 from datetime import datetime, timedelta
+from .models import ConversationMessage, Ticket
 
 logger = config.get_logger(__name__)
 
@@ -144,7 +145,7 @@ def generate_conversation_timestamps(start_time, end_time, number_of_messages):
 
     return [start_time, end_time] 
 
-def create_complete_ticket_conversation(ticket):
+def create_complete_ticket_conversation(ticket: Ticket) -> list[ConversationMessage]:
     """
     Generates a structured ticket conversation with timestamps.
 
@@ -154,7 +155,7 @@ def create_complete_ticket_conversation(ticket):
     Returns:
         List[dict]: Structured conversation with timestamps, or an empty list if an error occurs.
     """
-    structured_conversation = []
+    structured_conversation: list[ConversationMessage] = []
     
     try:
         # Validate required fields

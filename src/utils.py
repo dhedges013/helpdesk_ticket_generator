@@ -16,11 +16,9 @@ from .config import (
     TICKET_TECH,
     TIME_ENTRY_LABOR_TYPES,
     TIME_ENTRY_NOTE_TEMPLATES,
-    OUTPUT_TICKETS,
-    OUTPUT_CONVERSTATIONS,
-    OUTPUT_TIME_ENTRIES,
-    get_logger,
 )
+from .storage import append_dict_to_csv
+from .config import get_logger
 from .probability import ProbabilityProfile
 
 logger = get_logger(__name__)
@@ -63,52 +61,6 @@ def load_csv_data(file_path):
     except Exception as e:
         logging.error(f"Unexpected error loading file {file_path}: {e}")
         return []
-
-def _append_dataset_to_csv(data_dict, file_path, dataset_name, required=False):
-    """Helper to persist a dataset to CSV while validating structure."""
-
-    if not data_dict:
-        message = (
-            f"Error Creating CSV: The {dataset_name} dictionary is empty."
-            if required
-            else f"No {dataset_name} data provided for CSV export. Skipping."
-        )
-        (logging.error if required else logging.info)(message)
-        return
-
-    try:
-        min_length = min(len(v) for v in data_dict.values())
-    except ValueError:
-        logging.error(f"Error Creating CSV: The {dataset_name} dictionary is empty.")
-        return
-    except Exception as exc:
-        logging.error(f"Error preparing {dataset_name} data for CSV: {exc}")
-        return
-
-    if any(len(v) != min_length for v in data_dict.values()):
-        logging.error("Error: Dictionary values must have the same length.")
-        return
-
-    try:
-        file_exists = os.path.isfile(file_path)
-        with open(file_path, mode='a', newline='', encoding='utf-8') as file:
-            writer = csv.writer(file)
-            if not file_exists:
-                writer.writerow(data_dict.keys())
-            for row in zip(*data_dict.values()):
-                writer.writerow(row)
-
-        logging.info(f"Successfully appended {dataset_name} data to CSV file: {file_path}")
-    except Exception as exc:
-        logging.error(f"Error appending {dataset_name} data to CSV: {exc}")
-
-
-def append_dict_to_csv(ticket_data, conversation_data, time_entry_data=None):
-    """Append ticket, conversation, and optional time-entry data to CSV outputs."""
-
-    _append_dataset_to_csv(ticket_data, OUTPUT_TICKETS, "Ticket", required=True)
-    _append_dataset_to_csv(conversation_data, OUTPUT_CONVERSTATIONS, "Conversation", required=True)
-    _append_dataset_to_csv(time_entry_data, OUTPUT_TIME_ENTRIES, "Time entry")
 
 # Retrieve all data from CSV files
 def get_all_contacts():

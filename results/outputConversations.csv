@@ -1,9 +1,101 @@
 Customer,Ticket Number,speaker,message,timestamp
-Hedges MSP,7034,Daniel User,HELP: I cannot scan documents with my printer.,2025-10-24 21:08:53.560419
-Hedges MSP,7034,Tim the Tech,Reset your network settings.,2025-10-30 00:13:53.560419
-Hedges MSP,7034,Daniel User,I tried using a different browser,2025-11-04 03:23:53.560419
-Hedges MSP,7034,Tim the Tech,Confirm the time and date settings on your device.,2025-11-07 17:31:51.021794
-Petes Pizza Shop,3893,Sarah Manager,Attention: My system is not recognizing USB devices.,2025-11-11 10:59:54.527711
-Petes Pizza Shop,3893,Lindsey Syncro,Verify that your proxy settings are correct.,2025-11-11 11:04:54.527711
-Petes Pizza Shop,3893,Sarah Manager,I confirmed that my cables are secure,2025-11-11 11:34:54.527711
-Petes Pizza Shop,3893,Lindsey Syncro,Try using a different USB port.,2025-11-11 11:59:54.527711
+John Smith Smithing,7603,Sarah Manager,HELP: The operating system crashes unexpectedly.,2025-11-17 13:27:28.776782
+John Smith Smithing,7603,Lindsey Syncro,Ensure your battery is charged.,2025-11-19 09:12:28.776782
+John Smith Smithing,7603,Sarah Manager,I followed the troubleshooting guide,2025-11-19 09:32:28.776782
+John Smith Smithing,7603,Lindsey Syncro,Try accessing the system from a different browser.,2025-11-19 09:47:38.924197
+Hedges MSP,4665,Franky Smith,Attention: My laptop does not wake from sleep mode.,2025-11-21 19:19:58.797447
+Hedges MSP,4665,Lindsey Syncro,Try unplugging and plugging back in the device.,2025-11-21 20:19:58.797447
+🦷Dental Dan Dentistry,9339,Emily Carter,HELP: The screen resolution appears distorted.,2025-11-19 11:22:03.179026
+🦷Dental Dan Dentistry,9339,Tim the Tech,Confirm that all necessary services are running.,2025-11-19 12:22:03.179026
+🦷Dental Dan Dentistry,6108,billing,URGENT: My system clock keeps resetting.,2025-11-22 04:30:53.122923
+🦷Dental Dan Dentistry,6108,Lindsey Syncro,Try booting in safe mode.,2025-11-22 04:35:53.122923
+🦷Dental Dan Dentistry,6108,billing,I disabled my antivirus temporarily,2025-11-22 05:25:53.122923
+🦷Dental Dan Dentistry,6108,Lindsey Syncro,Verify that your VPN is connected properly.,2025-11-22 05:30:53.122923
+Petes Pizza Shop,5590,David Lee,Attention: The battery indicator is not accurate.,2025-11-17 13:34:21.493696
+Petes Pizza Shop,5590,Tim the Tech,Confirm the time and date settings on your device.,2025-11-17 19:59:09.186467
+Hedges MSP,1153,Christina Smith,URGENT: My computer boots very slowly.,2025-11-19 00:42:13.234197
+Hedges MSP,1153,Lindsey Syncro,Run a virus scan.,2025-11-19 02:52:13.234197
+Hedges MSP,1153,Christina Smith,I updated the software as suggested,2025-11-19 07:32:13.234197
+Hedges MSP,1153,Lindsey Syncro,Check if any keys on your keyboard are stuck.,2025-11-19 11:12:13.234197
+Hedges MSP,1153,Christina Smith,I used safe mode to troubleshoot,2025-11-19 14:37:13.234197
+Hedges MSP,1153,Lindsey Syncro,Confirm your username is correct.,2025-11-20 11:48:15.256722
+🐑 Sam's Sheep and Shearing,1101,Daniel User,Attention: The sound on my computer is distorted.,2025-11-17 14:41:02.695010
+🐑 Sam's Sheep and Shearing,1101,Lindsey Syncro,Verify that your proxy settings are correct.,2025-11-17 22:16:02.695010
+🐑 Sam's Sheep and Shearing,1101,Daniel User,I disabled my antivirus temporarily,2025-11-18 23:06:02.695010
+🐑 Sam's Sheep and Shearing,1101,Lindsey Syncro,Check if any keys on your keyboard are stuck.,2025-11-19 04:31:02.695010
+🐑 Sam's Sheep and Shearing,1101,Daniel User,I performed the virus scan,2025-11-19 22:16:02.695010
+🐑 Sam's Sheep and Shearing,1101,Lindsey Syncro,Clear your browser cache.,2025-11-21 02:41:05.648052
+Hedges MSP,9975,Franky Smith,HELP: My network adapter is not functioning.,2025-11-19 15:55:06.979152
+Hedges MSP,9975,Tim the Tech,Verify your network connection.,2025-11-19 16:05:06.979152
+Hedges MSP,9975,Franky Smith,I tried using a different device,2025-11-19 16:45:06.979152
+Hedges MSP,9975,Tim the Tech,Reset the printer by turning it off and on again.,2025-11-19 16:55:06.979152
+🐑 Sam's Sheep and Shearing,2036,Mike Assistant Manager,Attention: I see a malfunction detected error message.,2025-11-22 09:28:58.588830
+🐑 Sam's Sheep and Shearing,2036,Daniel Hedges,Temporarily disable your antivirus software.,2025-11-22 10:17:27.259116
+🐑 Sam's Sheep and Shearing,9307,My New Email,HELP: I see frequent driver not found errors.,2025-11-20 17:00:26.256137
+🐑 Sam's Sheep and Shearing,9307,Tim the Tech,Confirm the time and date settings on your device.,2025-11-20 18:00:26.256137
+Hedges MSP,9577,Sarah Manager,HELP: My laptop overheats during heavy use.,2025-11-21 09:07:52.367377
+Hedges MSP,9577,Tim the Tech,Check if your cable connections are secure.,2025-11-21 09:22:52.367377
+Hedges MSP,9577,Sarah Manager,I rebooted multiple times,2025-11-21 09:27:52.367377
+Hedges MSP,9577,Tim the Tech,Check the paper tray for jams.,2025-11-21 09:52:52.367377
+Hedges MSP,9577,Sarah Manager,I confirmed that my network adapter is working,2025-11-21 09:57:52.367377
+Hedges MSP,9577,Tim the Tech,Confirm that your printer is powered on.,2025-11-21 10:07:52.367377
+Hedges MSP,2159,Jessica Kim,HELP: I receive an unresponsive application warning.,2025-11-21 23:51:57.803450
+Hedges MSP,2159,Tim the Tech,Confirm your username is correct.,2025-11-22 00:06:57.803450
+Hedges MSP,2159,Jessica Kim,I tried restarting my computer,2025-11-22 00:11:57.803450
+Hedges MSP,2159,Tim the Tech,Ensure your battery is charged.,2025-11-22 00:31:57.803450
+Hedges MSP,2159,Jessica Kim,I tried restarting my computer,2025-11-22 00:41:57.803450
+Hedges MSP,2159,Tim the Tech,Try unplugging and plugging back in the device.,2025-11-22 00:51:57.803450
+🐑 Sam's Sheep and Shearing,8590,My New Email,URGENT: My computer randomly restarts.,2025-11-19 11:04:18.858919
+🐑 Sam's Sheep and Shearing,8590,Daniel Hedges,Verify that your VPN is connected properly.,2025-11-19 11:09:18.858919
+🐑 Sam's Sheep and Shearing,8590,My New Email,I rebooted multiple times,2025-11-19 11:14:18.858919
+🐑 Sam's Sheep and Shearing,8590,Daniel Hedges,Check for physical damage to cables.,2025-11-19 11:19:18.858919
+🐑 Sam's Sheep and Shearing,8590,My New Email,I tried restarting my computer,2025-11-19 11:24:18.858919
+🐑 Sam's Sheep and Shearing,8590,Daniel Hedges,Reset your network settings.,2025-11-19 12:04:18.858919
+🐑 Sam's Sheep and Shearing,4550,My New Email,URGENT: My computer fails to load the desktop environment.,2025-11-22 07:46:38.398137
+🐑 Sam's Sheep and Shearing,4550,Lindsey Syncro,Reset your password using the recovery tool.,2025-11-22 08:01:38.398137
+🐑 Sam's Sheep and Shearing,4550,My New Email,I checked my email settings,2025-11-22 08:26:38.398137
+🐑 Sam's Sheep and Shearing,4550,Lindsey Syncro,Clear your DNS cache.,2025-11-22 08:46:38.398137
+🐑 Sam's Sheep and Shearing,7269,Sarah Manager,HELP: My system doesn't detect the wireless mouse.,2025-11-19 07:04:06.779115
+🐑 Sam's Sheep and Shearing,7269,Tim the Tech,Verify your network connection.,2025-11-20 02:49:06.779115
+🐑 Sam's Sheep and Shearing,7269,Sarah Manager,I tried using a different browser,2025-11-20 10:14:06.779115
+🐑 Sam's Sheep and Shearing,7269,Tim the Tech,Check for physical damage to cables.,2025-11-20 11:14:06.779115
+🐑 Sam's Sheep and Shearing,7269,Sarah Manager,I reinstalled the drivers,2025-11-20 21:59:06.779115
+🐑 Sam's Sheep and Shearing,7269,Tim the Tech,Try using a different USB port.,2025-11-20 22:13:44.715087
+Hedges MSP,7434,GMAIL,Attention: The network cable appears to be damaged.,2025-11-17 23:14:19.560555
+Hedges MSP,7434,Tim the Tech,Try unplugging and plugging back in the device.,2025-11-19 09:49:19.560555
+Hedges MSP,7434,GMAIL,I performed the virus scan,2025-11-19 21:59:19.560555
+Hedges MSP,7434,Tim the Tech,Check if the issue occurs on another user account.,2025-11-19 22:50:17.849876
+No Change Carl,8689,Christina Smith,HELP: My system update failed and now it won't boot.,2025-11-22 03:12:55.546704
+No Change Carl,8689,Daniel Hedges,Check for error messages and refer to our troubleshooting guide.,2025-11-22 03:22:55.546704
+No Change Carl,8689,Christina Smith,I tried everything,2025-11-22 04:07:55.546704
+No Change Carl,8689,Daniel Hedges,Check if any keys on your keyboard are stuck.,2025-11-22 04:12:55.546704
+John Smith Smithing,1328,pap,Attention: My system doesn't detect the wireless mouse.,2025-11-18 19:00:56.627485
+John Smith Smithing,1328,Tim the Tech,Reset your password using the recovery tool.,2025-11-18 20:00:56.627485
+🦷Dental Dan Dentistry,5993,Site Sammy,URGENT: The audio is not working.,2025-11-22 05:41:37.080782
+🦷Dental Dan Dentistry,5993,Tim the Tech,Try unplugging and plugging back in the device.,2025-11-22 06:41:37.080782
+No Change Carl,8220,GMAIL,URGENT: The system is experiencing frequent lag.,2025-11-21 20:08:00.080187
+No Change Carl,8220,Daniel Hedges,Run a disk cleanup.,2025-11-21 20:18:00.080187
+No Change Carl,8220,GMAIL,I checked the software logs,2025-11-21 20:48:00.080187
+No Change Carl,8220,Daniel Hedges,Check your audio settings.,2025-11-21 20:53:00.080187
+No Change Carl,8220,GMAIL,I followed all your suggestions,2025-11-21 20:58:00.080187
+No Change Carl,8220,Daniel Hedges,Try booting in safe mode.,2025-11-21 21:08:00.080187
+John Smith Smithing,2993,Site Sammy,HELP: I get a network timeout error.,2025-11-20 06:33:49.354285
+John Smith Smithing,2993,Tim the Tech,Verify that your device is properly connected to the network.,2025-11-20 07:03:49.354285
+John Smith Smithing,2993,Site Sammy,I rechecked the settings and still encounter the same problem.,2025-11-20 07:08:49.354285
+John Smith Smithing,2993,Tim the Tech,Update your audio drivers.,2025-11-20 07:33:49.354285
+Petes Pizza Shop,3035,Franky Smith,Attention: I can't access the internal company website.,2025-11-22 04:44:49.774243
+Petes Pizza Shop,3035,Lindsey Syncro,Reset the printer by turning it off and on again.,2025-11-22 05:04:49.774243
+Petes Pizza Shop,3035,Franky Smith,I updated the software as suggested,2025-11-22 05:09:49.774243
+Petes Pizza Shop,3035,Lindsey Syncro,Disconnect other USB devices.,2025-11-22 05:44:49.774243
+John Smith Smithing,7304,Mike Assistant Manager,Attention: I cannot update my operating system.,2025-11-20 11:51:25.857308
+John Smith Smithing,7304,Daniel Hedges,Make sure your software license is active.,2025-11-20 13:26:25.857308
+John Smith Smithing,7304,Mike Assistant Manager,I verified my account details,2025-11-20 15:56:25.857308
+John Smith Smithing,7304,Daniel Hedges,Reset the printer by turning it off and on again.,2025-11-20 18:06:25.857308
+John Smith Smithing,7304,Mike Assistant Manager,I followed all your suggestions,2025-11-20 22:06:25.857308
+John Smith Smithing,7304,Daniel Hedges,Update your software to the latest version.,2025-11-21 07:50:28.626849
+Hedges MSP,2664,Christina Smith,Attention: The screen flickers intermittently.,2025-11-19 12:19:57.084261
+Hedges MSP,2664,Daniel Hedges,Clear your DNS cache.,2025-11-21 22:29:57.084261
+Hedges MSP,2664,Christina Smith,I rebooted my router as well,2025-11-22 07:24:57.084261
+Hedges MSP,2664,Daniel Hedges,Try unplugging and plugging back in the device.,2025-11-22 09:58:12.722353
+Petes Pizza Shop,9985,pap,URGENT: My network connection is extremely slow.,2025-11-22 06:40:54.459490
+Petes Pizza Shop,9985,Daniel Hedges,Confirm that all necessary services are running.,2025-11-22 07:40:54.459490
