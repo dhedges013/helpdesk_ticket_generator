@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+from datetime import datetime
 from pathlib import Path
 from typing import Iterable, Mapping, MutableMapping
 
@@ -48,9 +49,14 @@ DEFAULT_OUTPUT_PATH = DEFAULT_TICKETS_PATH.parent / "syncro_combined.csv"
 def read_csv_rows(path: Path) -> list[MutableMapping[str, str]]:
     """Read *path* as a CSV file and return a list of dictionaries."""
 
-    with path.open(newline="", encoding="utf-8-sig") as handle:
-        reader = csv.DictReader(handle)
-        return [dict(row) for row in reader]
+    try:
+        with path.open(newline="", encoding="utf-8-sig") as handle:
+            reader = csv.DictReader(handle)
+            return [dict(row) for row in reader]
+    except csv.Error as exc:
+        raise ValueError(f"Malformed CSV at {path}: {exc}") from exc
+    except OSError as exc:
+        raise OSError(f"Unable to read CSV {path}: {exc}") from exc
 
 
 def normalize_key(value: str | None) -> str:
@@ -68,6 +74,22 @@ def select_first(*values: str | None) -> str:
             if candidate:
                 return candidate
     return ""
+
+
+def format_timestamp(value: str | None) -> str:
+    """Strip microseconds from a timestamp string when possible."""
+
+    text = (value or "").strip()
+    if not text:
+        return ""
+
+    try:
+        parsed = datetime.fromisoformat(text)
+        return parsed.replace(microsecond=0).strftime("%Y-%m-%d %H:%M:%S")
+    except ValueError:
+        if "." in text:
+            return text.split(".", 1)[0]
+        return text
 
 
 def build_output_row(
@@ -102,11 +124,15 @@ def build_output_row(
         "ticket subject": select_first(ticket_row.get("Subject") if ticket_row else None),
         "ticket description": select_first(ticket_row.get("Description") if ticket_row else None),
         "ticket response": select_first(ticket_row.get("Description") if ticket_row else None),
-        "timestamp": select_first(conversation_row.get("timestamp") if conversation_row else None),
+        "timestamp": format_timestamp(
+            select_first(conversation_row.get("timestamp") if conversation_row else None)
+        ),
         "email body": select_first(conversation_row.get("message") if conversation_row else None),
         "ticket status": select_first(ticket_row.get("Status") if ticket_row else None),
         "ticket issue type": select_first(ticket_row.get("Issue Type") if ticket_row else None),
-        "ticket created date": select_first(ticket_row.get("Start Time") if ticket_row else None),
+        "ticket created date": format_timestamp(
+            select_first(ticket_row.get("Start Time") if ticket_row else None)
+        ),
         "ticket priority": select_first(ticket_row.get("Priority") if ticket_row else None),
     }
 
@@ -199,18 +225,22 @@ def main() -> None:
 
     args = parse_args()
 
-    if not args.tickets.exists():
-        raise FileNotFoundError(f"Ticket CSV not found: {args.tickets}")
-    if not args.conversations.exists():
-        raise FileNotFoundError(f"Conversation CSV not found: {args.conversations}")
+    try:
+        if not args.tickets.exists():
+            raise FileNotFoundError(f"Ticket CSV not found: {args.tickets}")
+        if not args.conversations.exists():
+            raise FileNotFoundError(f"Conversation CSV not found: {args.conversations}")
 
-    tickets_rows = read_csv_rows(args.tickets)
-    conversation_rows = read_csv_rows(args.conversations)
+        tickets_rows = read_csv_rows(args.tickets)
+        conversation_rows = read_csv_rows(args.conversations)
 
-    combined_rows = combine_data(tickets_rows, conversation_rows)
-    write_csv(args.output, combined_rows)
+        combined_rows = combine_data(tickets_rows, conversation_rows)
+        write_csv(args.output, combined_rows)
 
-    print(f"Combined {len(combined_rows)} rows into {args.output}")
+        print(f"Combined {len(combined_rows)} rows into {args.output}")
+    except Exception as exc:
+        print(f"Failed to generate combined Syncro CSV: {exc}")
+        raise SystemExit(1) from exc
 
 
 if __name__ == "__main__":

@@ -52,11 +52,8 @@
         "__default__": 1
       }
     }
+    
   },
-  "tech_profiles": {
-    "Tim the Tech": "onsite_specialist",
-    "Daniel Hedges": "balanced_remote",
-    "Lindsey Syncro": "balanced_remote"
-  },
+  "tech_profiles": {},
   "customer_profiles": {}
 }

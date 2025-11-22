@@ -31,6 +31,14 @@ Application logs generate a new file each run in logs folder.
 
 Created Tickets and Conversations will be output to the results folder in their own csv files
 
+## Discord Bot
+
+You can run a discord bot to generate tickets in discord
+You will need to seet a token. Example: $env:DISCORD_BOT_TOKEN = 'MTQzODMyNDAy'
+
+
+
+
 ## Done List
 
     - Nov 25 - added Syncro CSV Template Output

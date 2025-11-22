@@ -42,16 +42,12 @@ def generate_random_ticket_number():
         logging.error(f"Error generating random ticket number: {e}")
         return None
     
-def _resolve_profile(customer: Optional[str], tech: Optional[str], context: Optional[GenerationContext]) -> ProbabilityProfile:
-    if context:
-        return context.resolve_profile(customer=customer, tech=tech)
-    return PROFILE_REGISTRY.resolve_profile(customer=customer, tech=tech)
-
-
 def generate_ticket(context: Optional[GenerationContext] = None):
     # Ticket class or function to generate a ticket
     logging.debug("Starting ticket generation.")
     try:
+        profile_registry = context.probability_registry if context else PROFILE_REGISTRY
+
         ticket_number = generate_random_ticket_number()
         # Ensure all fields are generated correctly
         contact = get_random_contact()
@@ -74,24 +70,31 @@ def generate_ticket(context: Optional[GenerationContext] = None):
             logging.warning("No description generated. Setting default.")
             description = "No description provided."
 
-        profile = _resolve_profile(customer, tech, context)
+        tech_profile = (
+            context.resolve_tech_profile(tech) if context else profile_registry.resolve_tech_profile(tech)
+        )
+        customer_profile = (
+            context.resolve_customer_profile(customer)
+            if context
+            else profile_registry.resolve_customer_profile(customer)
+        )
 
-        issue_type = get_random_issue_type(profile)
+        issue_type = get_random_issue_type(tech_profile)
         if not issue_type:
             logging.warning("No issue type generated. Setting default.")
             issue_type = "General Inquiry"
 
-        priority = get_random_priority(profile)
+        priority = get_random_priority(customer_profile)
         if not priority:
             logging.warning("No priority generated. Setting default.")
             priority = "Low"
 
-        status = get_random_status(profile)
+        status = get_random_status(customer_profile)
         if not status:
             logging.warning("No status generated. Setting default.")
             status = "Open"
 
-        subject = get_random_subject(profile)
+        subject = get_random_subject(tech_profile)
         if not subject:
             logging.warning("No subject generated. Setting default.")
             subject = "General Issue"

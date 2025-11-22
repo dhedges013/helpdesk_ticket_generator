@@ -1,13 +1,9 @@
 Customer,Ticket Number,speaker,message,timestamp
-Petes Pizza Shop,4152,Christina Smith,URGENT: My laptop's power adapter is not recognized.,2025-10-15 09:02:43.978329
-Petes Pizza Shop,4152,Lindsey Syncro,Reset your password using the recovery tool.,2025-10-16 01:47:43.978329
-Petes Pizza Shop,4152,Christina Smith,I ran the diagnostic tool,2025-10-16 08:22:43.978329
-Petes Pizza Shop,4152,Lindsey Syncro,Check if any keys on your keyboard are stuck.,2025-10-17 06:32:43.978329
-Petes Pizza Shop,4152,Christina Smith,I checked for updates,2025-10-17 12:52:43.978329
-Petes Pizza Shop,4152,Lindsey Syncro,Verify that your device is properly connected to the network.,2025-10-20 19:22:20.132170
-🐑 Sam's Sheep and Shearing,4708,Daniel Gmail,Attention: My system gives a cache error during operation.,2025-10-18 13:42:53.972218
-🐑 Sam's Sheep and Shearing,4708,Lindsey Syncro,Try accessing the system from a different browser.,2025-10-31 22:07:53.972218
-🐑 Sam's Sheep and Shearing,4708,Daniel Gmail,I tried a hard reset,2025-11-04 07:27:53.972218
-🐑 Sam's Sheep and Shearing,4708,Lindsey Syncro,Disconnect other USB devices.,2025-11-04 12:17:53.972218
-🐑 Sam's Sheep and Shearing,4708,Daniel Gmail,I updated all my drivers,2025-11-08 06:52:53.972218
-🐑 Sam's Sheep and Shearing,4708,Lindsey Syncro,Check for physical damage to cables.,2025-11-08 07:04:30.603901
+Hedges MSP,7034,Daniel User,HELP: I cannot scan documents with my printer.,2025-10-24 21:08:53.560419
+Hedges MSP,7034,Tim the Tech,Reset your network settings.,2025-10-30 00:13:53.560419
+Hedges MSP,7034,Daniel User,I tried using a different browser,2025-11-04 03:23:53.560419
+Hedges MSP,7034,Tim the Tech,Confirm the time and date settings on your device.,2025-11-07 17:31:51.021794
+Petes Pizza Shop,3893,Sarah Manager,Attention: My system is not recognizing USB devices.,2025-11-11 10:59:54.527711
+Petes Pizza Shop,3893,Lindsey Syncro,Verify that your proxy settings are correct.,2025-11-11 11:04:54.527711
+Petes Pizza Shop,3893,Sarah Manager,I confirmed that my cables are secure,2025-11-11 11:34:54.527711
+Petes Pizza Shop,3893,Lindsey Syncro,Try using a different USB port.,2025-11-11 11:59:54.527711
