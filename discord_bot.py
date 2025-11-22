@@ -1,0 +1,239 @@
+"""Discord bot bridge for generating helpdesk tickets on demand."""
+
+from __future__ import annotations
+
+import asyncio
+import logging
+import os
+from datetime import datetime
+from typing import List, Optional, Sequence, Tuple
+
+import discord
+from discord.ext import commands
+
+from api_interface import generate_single_ticket
+
+LOGGER = logging.getLogger("helpdesk.discord")
+logging.basicConfig(level=os.getenv("DISCORD_BOT_LOG_LEVEL", "INFO").upper())
+
+DEFAULT_PREFIX = "!"
+MAX_TICKET_BATCH = max(1, int(os.getenv("DISCORD_MAX_TICKETS", "3")))
+
+
+def _parse_channel_ids(raw_value: Optional[str]) -> set[int]:
+    """Convert a comma-separated string into a set of channel IDs."""
+
+    if not raw_value:
+        return set()
+
+    parsed: set[int] = set()
+    for chunk in raw_value.split(","):
+        chunk = chunk.strip()
+        if not chunk:
+            continue
+        try:
+            parsed.add(int(chunk))
+        except ValueError:
+            LOGGER.warning("Ignoring invalid channel id: %s", chunk)
+    return parsed
+
+
+ALLOWED_CHANNEL_IDS = _parse_channel_ids(os.getenv("DISCORD_ALLOWED_CHANNELS"))
+
+
+def _format_datetime(value: object) -> str:
+    """Convert datetime-like objects into a compact timestamp string."""
+
+    if isinstance(value, datetime):
+        return value.strftime("%Y-%m-%d %H:%M")
+    return str(value)
+
+
+def _truncate(value: str, limit: int = 1024) -> str:
+    """Trim strings so they always fit Discord field limits."""
+
+    if len(value) <= limit:
+        return value
+    return value[: limit - 3] + "..."
+
+
+def _summarize_conversation(conversation: Sequence[dict], limit: int = 4) -> str:
+    """Return a human-readable summary of the generated conversation."""
+
+    if not conversation:
+        return "No conversation generated."
+
+    lines: List[str] = []
+    for entry in conversation[:limit]:
+        timestamp = _format_datetime(entry.get("timestamp"))
+        speaker = entry.get("speaker", "Unknown")
+        message = entry.get("message", "").strip()
+        lines.append(f"[{timestamp}] **{speaker}**: {message}")
+
+    remaining = len(conversation) - limit
+    if remaining > 0:
+        lines.append(f"...and {remaining} more messages.")
+    return "\n".join(lines)
+
+
+def _summarize_time_entries(time_entries: Sequence[dict], limit: int = 4) -> str:
+    """Return a compact string describing recent time entries."""
+
+    if not time_entries:
+        return "No time entries were generated."
+
+    parts: List[str] = []
+    for entry in time_entries[:limit]:
+        tech = entry.get("Tech", "Unknown tech")
+        duration = entry.get("Duration Minutes", "?")
+        labor_type = entry.get("Labor Type", "Labor")
+        created_at = _format_datetime(entry.get("Created At"))
+        notes = entry.get("Notes", "").strip()
+        parts.append(
+            f"{created_at}: {tech} logged {duration} min ({labor_type}) - {notes}"
+        )
+
+    remaining = len(time_entries) - limit
+    if remaining > 0:
+        parts.append(f"...and {remaining} more entries.")
+    return "\n".join(parts)
+
+
+def _build_ticket_embed(payload: dict) -> discord.Embed:
+    """Create a Discord embed representing a generated ticket bundle."""
+
+    ticket = payload["ticket"]
+    conversation = payload.get("conversation") or []
+    time_entries = payload.get("time_entries") or []
+
+    ticket_number = ticket.get("Ticket Number", "Unknown")
+    subject = ticket.get("Subject", "No subject")
+    title = f"Ticket #{ticket_number}: {subject}"
+    description = (
+        f"Customer: {ticket.get('Customer', 'Unknown')}\n"
+        f"Contact: {ticket.get('Contact', 'Unknown contact')}\n"
+        f"Issue: {ticket.get('Issue Type', 'Unknown issue')}"
+    )
+
+    embed = discord.Embed(
+        title=title,
+        description=_truncate(description, 400),
+        color=discord.Color.blurple(),
+    )
+    embed.add_field(
+        name="Assignment",
+        value=(
+            f"Status: {ticket.get('Status', 'Unknown')} • "
+            f"Priority: {ticket.get('Priority', 'Unknown')}\n"
+            f"Tech: {ticket.get('Assigned Tech', 'Unassigned')}"
+        ),
+        inline=False,
+    )
+
+    start_time = ticket.get("Start Time")
+    end_time = ticket.get("End Time")
+    embed.add_field(
+        name="Schedule",
+        value=f"{_format_datetime(start_time)} → {_format_datetime(end_time)}",
+        inline=False,
+    )
+
+    embed.add_field(
+        name="Description",
+        value=_truncate(ticket.get("Description", "No description provided.")),
+        inline=False,
+    )
+    embed.add_field(
+        name="Conversation",
+        value=_truncate(_summarize_conversation(conversation)),
+        inline=False,
+    )
+    embed.add_field(
+        name="Time Entries",
+        value=_truncate(_summarize_time_entries(time_entries)),
+        inline=False,
+    )
+    embed.set_footer(text="Generated by Helpdesk Ticket Generator")
+    return embed
+
+
+async def _generate_ticket_async() -> Tuple[Optional[dict], Optional[str]]:
+    """Run the synchronous generator logic in a thread."""
+
+    return await asyncio.to_thread(generate_single_ticket)
+
+
+def _allowed_channel(channel_id: int) -> bool:
+    """Check whether the command can run in the provided channel."""
+
+    return not ALLOWED_CHANNEL_IDS or channel_id in ALLOWED_CHANNEL_IDS
+
+
+def build_bot(command_prefix: str = DEFAULT_PREFIX) -> commands.Bot:
+    """Create and configure the Discord bot instance."""
+
+    intents = discord.Intents.default()
+    intents.message_content = True
+    bot = commands.Bot(command_prefix=command_prefix, intents=intents)
+
+    @bot.event
+    async def on_ready() -> None:  # pragma: no cover - runtime hook
+        LOGGER.info("Logged in as %s (id: %s)", bot.user, bot.user.id)
+
+    @bot.command(name="ticket")
+    async def ticket_cmd(
+        ctx: commands.Context,
+        count: int = 1,
+    ) -> None:
+        """Generate one or more tickets and reply with their details."""
+
+        if not _allowed_channel(ctx.channel.id):
+            await ctx.reply(
+                "This bot is not allowed to run in this channel.",
+                mention_author=False,
+            )
+            return
+
+        if count < 1 or count > MAX_TICKET_BATCH:
+            await ctx.reply(
+                f"Please request between 1 and {MAX_TICKET_BATCH} tickets.",
+                mention_author=False,
+            )
+            return
+
+        async with ctx.typing():
+            responses: List[discord.Embed] = []
+
+        for _ in range(count):
+            payload, error = await _generate_ticket_async()
+            if error or not payload:
+                LOGGER.error("Ticket generation failed: %s", error)
+                await ctx.reply(
+                    f"Ticket generation failed: {error or 'Unknown error.'}",
+                    mention_author=False,
+                )
+                return
+            responses.append(_build_ticket_embed(payload))
+
+        for embed in responses:
+            await ctx.reply(embed=embed, mention_author=False)
+
+    return bot
+
+
+def run_bot() -> None:
+    """Entrypoint for launching the Discord bot."""
+
+    token = os.getenv("DISCORD_BOT_TOKEN")
+    if not token:
+        raise RuntimeError(
+            "DISCORD_BOT_TOKEN is not set. Provide your bot token as an environment variable."
+        )
+
+    prefix = os.getenv("DISCORD_COMMAND_PREFIX", DEFAULT_PREFIX)
+    bot = build_bot(prefix)
+    bot.run(token)
+
+
+if __name__ == "__main__":  # pragma: no cover - manual entrypoint
+    run_bot()
