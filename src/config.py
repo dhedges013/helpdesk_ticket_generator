@@ -18,6 +18,14 @@ RUNTIME_DEFAULTS: Dict[str, int] = {
     "TIME_ENTRY_DURATION_INTERVAL_MINUTES": 5,
     "DAILY_TICKET_CAP": 10,
     "TIME_ENTRY_BUFFER_MINUTES": 5,
+    "MAX_OPEN_TICKETS_PER_TECH": 10,
+    "MAX_OPEN_TICKETS_UNASSIGNED": 500,
+}
+
+# Non-numeric runtime toggles
+RUNTIME_FLAGS = {
+    "OVERFLOW_BEHAVIOR": "reassign",
+    "CLAMP_TO_NOW": True,
 }
 
 _runtime_settings: Dict[str, int] = {}
@@ -51,8 +59,10 @@ def _normalize_settings(raw_settings: Dict[str, int]) -> Dict[str, int]:
 def _save_runtime_settings(settings: Dict[str, int]) -> None:
     """Persist runtime settings to the JSON configuration file."""
 
+    payload = dict(settings)
+    payload.update(RUNTIME_FLAGS)
     with open(CONFIG_FILE, "w", encoding="utf-8") as config_file:
-        json.dump(settings, config_file, indent=2)
+        json.dump(payload, config_file, indent=2)
 
 
 def _load_runtime_settings() -> Dict[str, int]:
@@ -74,6 +84,11 @@ def _load_runtime_settings() -> Dict[str, int]:
         _save_runtime_settings(normalized)
         return normalized
 
+    # Refresh runtime flags from file while keeping defaults as fallback
+    for key in RUNTIME_FLAGS:
+        if key in file_settings:
+            RUNTIME_FLAGS[key] = file_settings[key]
+
     return _normalize_settings(file_settings)
 
 
@@ -90,6 +105,10 @@ def _apply_runtime_settings(settings: Dict[str, int]) -> None:
     global TIME_ENTRY_DURATION_INTERVAL_MINUTES
     global DAILY_TICKET_CAP
     global TIME_ENTRY_BUFFER_MINUTES
+    global MAX_OPEN_TICKETS_PER_TECH
+    global MAX_OPEN_TICKETS_UNASSIGNED
+    global OVERFLOW_BEHAVIOR
+    global CLAMP_TO_NOW
 
     _runtime_settings = settings
     DAYS_AGO = settings["DAYS_AGO"]
@@ -101,6 +120,11 @@ def _apply_runtime_settings(settings: Dict[str, int]) -> None:
     TIME_ENTRY_DURATION_INTERVAL_MINUTES = settings["TIME_ENTRY_DURATION_INTERVAL_MINUTES"]
     DAILY_TICKET_CAP = settings["DAILY_TICKET_CAP"]
     TIME_ENTRY_BUFFER_MINUTES = settings["TIME_ENTRY_BUFFER_MINUTES"]
+    MAX_OPEN_TICKETS_PER_TECH = settings["MAX_OPEN_TICKETS_PER_TECH"]
+    MAX_OPEN_TICKETS_UNASSIGNED = settings["MAX_OPEN_TICKETS_UNASSIGNED"]
+
+    OVERFLOW_BEHAVIOR = RUNTIME_FLAGS.get("OVERFLOW_BEHAVIOR", "reassign")
+    CLAMP_TO_NOW = bool(RUNTIME_FLAGS.get("CLAMP_TO_NOW", True))
 
 
 def get_runtime_settings() -> Dict[str, int]:

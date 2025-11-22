@@ -1,13 +1,99 @@
 Customer,Ticket Number,speaker,message,timestamp
-No Change Carl,3302,Site Sammy,URGENT: I see frequent driver not found errors.,2025-10-15 13:27:10.270336
-No Change Carl,3302,Lindsey Syncro,Log out and log back into your account.,2025-10-15 21:52:10.270336
-No Change Carl,3302,Site Sammy,I cleared temporary files and rebooted,2025-10-18 02:47:10.270336
-No Change Carl,3302,Lindsey Syncro,Clear your browser cache.,2025-10-20 09:07:10.270336
-No Change Carl,3302,Site Sammy,I checked the software logs,2025-10-22 06:32:10.270336
-No Change Carl,3302,Lindsey Syncro,Try booting in safe mode.,2025-10-25 06:15:53.070103
-Hedges MSP,6944,pap,Attention: My system gives a no bootable device error.,2025-11-03 18:45:51.658011
-Hedges MSP,6944,Tim the Tech,Reinstall your printer drivers.,2025-11-03 18:55:51.658011
-Hedges MSP,6944,pap,I checked all the cables,2025-11-03 19:05:51.658011
-Hedges MSP,6944,Tim the Tech,Close and reopen your program.,2025-11-03 19:20:51.658011
-Hedges MSP,6944,pap,I confirmed that my cables are secure,2025-11-03 19:35:51.658011
-Hedges MSP,6944,Tim the Tech,Clear temporary files.,2025-11-03 19:45:51.658011
+🐑 Sam's Sheep and Shearing,5483,Franky Smith,Attention: I see an unknown error message frequently.,2025-11-21 03:14:30.895261
+🐑 Sam's Sheep and Shearing,5483,Tim the Tech,Verify your network connection.,2025-11-21 03:19:30.895261
+🐑 Sam's Sheep and Shearing,5483,Franky Smith,I double-checked the connections,2025-11-21 03:24:30.895261
+🐑 Sam's Sheep and Shearing,5483,Tim the Tech,Clear temporary files.,2025-11-21 03:34:30.895261
+🐑 Sam's Sheep and Shearing,5483,Franky Smith,The blue screen error reoccurred after I restarted my computer.,2025-11-21 03:44:30.895261
+🐑 Sam's Sheep and Shearing,5483,Tim the Tech,Check if any keys on your keyboard are stuck.,2025-11-21 04:14:30.895261
+John Smith Smithing,3712,Dan the Dentist,URGENT: I see an error message about missing system files.,2025-11-21 02:51:15.421653
+John Smith Smithing,3712,Lindsey Syncro,Run a diagnostic tool.,2025-11-21 03:06:15.421653
+John Smith Smithing,3712,Dan the Dentist,I followed all the steps,2025-11-21 03:26:15.421653
+John Smith Smithing,3712,Lindsey Syncro,Verify that your proxy settings are correct.,2025-11-21 03:31:15.421653
+John Smith Smithing,3712,Dan the Dentist,I tried unplugging and reconnecting the device,2025-11-21 03:46:15.421653
+John Smith Smithing,3712,Lindsey Syncro,Reinstall your printer drivers.,2025-11-21 03:51:15.421653
+Petes Pizza Shop,1128,New User New,Attention: I experience a disk error while transferring files.,2025-11-21 19:33:51.449963
+Petes Pizza Shop,1128,Daniel Hedges,Check for overheating and clean your fans.,2025-11-21 20:33:51.449963
+John Smith Smithing,7341,Co Managed,HELP: I see an unknown error message frequently.,2025-11-21 17:47:49.675778
+John Smith Smithing,7341,Lindsey Syncro,Disconnect other USB devices.,2025-11-21 18:02:49.675778
+John Smith Smithing,7341,Co Managed,I used safe mode to troubleshoot,2025-11-21 18:12:49.675778
+John Smith Smithing,7341,Lindsey Syncro,Reset your password using the recovery tool.,2025-11-21 18:47:49.675778
+John Smith Smithing,2865,Daniel User,URGENT: The screen resolution appears distorted.,2025-11-19 16:22:57.406383
+John Smith Smithing,2865,Tim the Tech,Confirm that all necessary services are running.,2025-11-19 18:02:57.406383
+John Smith Smithing,2865,Daniel User,I attempted to access the file from another location,2025-11-21 12:37:57.406383
+John Smith Smithing,2865,Tim the Tech,Clear your DNS cache.,2025-11-22 05:46:45.539459
+🐑 Sam's Sheep and Shearing,3932,New User New,URGENT: The application requires an update to run properly.,2025-11-20 12:47:26.869268
+🐑 Sam's Sheep and Shearing,3932,Daniel Hedges,Reset your password using the recovery tool.,2025-11-20 12:52:26.869268
+🐑 Sam's Sheep and Shearing,3932,New User New,I verified my account details,2025-11-20 13:02:26.869268
+🐑 Sam's Sheep and Shearing,3932,Daniel Hedges,Adjust your display settings.,2025-11-20 13:32:26.869268
+🐑 Sam's Sheep and Shearing,3932,New User New,I tried everything,2025-11-20 13:37:26.869268
+🐑 Sam's Sheep and Shearing,3932,Daniel Hedges,Run a disk cleanup.,2025-11-20 13:47:26.869268
+Hedges MSP,7302,Daniel Gmail,HELP: My system gives a cache error during operation.,2025-11-21 18:29:53.467032
+Hedges MSP,7302,Lindsey Syncro,Verify that the correct printer is selected.,2025-11-21 18:39:53.467032
+Hedges MSP,7302,Daniel Gmail,I tried unplugging and reconnecting the device,2025-11-21 18:54:53.467032
+Hedges MSP,7302,Lindsey Syncro,Reset your password using the recovery tool.,2025-11-21 19:14:53.467032
+Hedges MSP,7302,Daniel Gmail,I verified my account credentials and they are valid.,2025-11-21 19:19:53.467032
+Hedges MSP,7302,Lindsey Syncro,Close and reopen your program.,2025-11-21 19:29:53.467032
+Petes Pizza Shop,4649,Mike Assistant Manager,HELP: I experience lag while streaming videos.,2025-11-18 02:54:43.537893
+Petes Pizza Shop,4649,Lindsey Syncro,Check the paper tray for jams.,2025-11-18 04:14:43.537893
+Petes Pizza Shop,4649,Mike Assistant Manager,I tried unplugging and reconnecting the device,2025-11-18 22:14:43.537893
+Petes Pizza Shop,4649,Lindsey Syncro,Reset your network settings.,2025-11-19 05:58:43.537893
+🐑 Sam's Sheep and Shearing,7168,Franky Smith,Attention: I see a memory allocation error during startup.,2025-11-18 17:25:08.173835
+🐑 Sam's Sheep and Shearing,7168,Lindsey Syncro,Confirm that your printer is powered on.,2025-11-18 18:45:08.173835
+🐑 Sam's Sheep and Shearing,7168,Franky Smith,I tried a hard reset,2025-11-18 21:10:08.173835
+🐑 Sam's Sheep and Shearing,7168,Lindsey Syncro,Verify your network connection.,2025-11-19 07:14:40.492415
+Hedges MSP,6211,billing,Attention: My computer displays a system overload warning.,2025-11-20 05:20:07.691214
+Hedges MSP,6211,Lindsey Syncro,Check your email spam folder.,2025-11-20 06:00:07.691214
+Hedges MSP,6211,billing,I followed the troubleshooting guide,2025-11-20 06:05:07.691214
+Hedges MSP,6211,Lindsey Syncro,Try reinstalling the application.,2025-11-20 06:20:07.691214
+🦷Dental Dan Dentistry,1590,Franky Smith,Attention: My system gives a boot device not found error.,2025-11-21 05:58:49.496512
+🦷Dental Dan Dentistry,1590,Tim the Tech,Try using a different USB port.,2025-11-21 06:58:49.496512
+🐑 Sam's Sheep and Shearing,1964,Sarah Manager,URGENT: I see a memory allocation error during startup.,2025-11-21 08:18:47.868396
+🐑 Sam's Sheep and Shearing,1964,Lindsey Syncro,Try unplugging and plugging back in the device.,2025-11-21 08:33:47.868396
+🐑 Sam's Sheep and Shearing,1964,Sarah Manager,I even contacted a colleague,2025-11-21 08:43:47.868396
+🐑 Sam's Sheep and Shearing,1964,Lindsey Syncro,Check your email spam folder.,2025-11-21 08:53:47.868396
+🐑 Sam's Sheep and Shearing,1964,Sarah Manager,I reinstalled the application,2025-11-21 09:33:47.868396
+🐑 Sam's Sheep and Shearing,1964,Lindsey Syncro,Confirm the time and date settings on your device.,2025-11-21 09:35:07.276822
+🐑 Sam's Sheep and Shearing,2667,Co Managed,HELP: My system displays a blue screen of death.,2025-11-19 10:34:26.497635
+🐑 Sam's Sheep and Shearing,2667,Tim the Tech,Confirm your username is correct.,2025-11-19 10:49:26.497635
+🐑 Sam's Sheep and Shearing,2667,Co Managed,I cleared my cache and cookies,2025-11-19 10:54:26.497635
+🐑 Sam's Sheep and Shearing,2667,Tim the Tech,Update your audio drivers.,2025-11-19 11:09:26.497635
+🐑 Sam's Sheep and Shearing,2667,Co Managed,I followed the troubleshooting guide,2025-11-19 11:24:26.497635
+🐑 Sam's Sheep and Shearing,2667,Tim the Tech,Confirm the time and date settings on your device.,2025-11-19 11:34:26.497635
+No Change Carl,7901,pap,Attention: I get an operating system not found error.,2025-11-17 21:35:25.246451
+No Change Carl,7901,Lindsey Syncro,Verify that the correct printer is selected.,2025-11-17 23:45:25.246451
+No Change Carl,7901,pap,The screen remains black even after the restart.,2025-11-18 04:35:25.246451
+No Change Carl,7901,Lindsey Syncro,Update your software to the latest version.,2025-11-18 08:21:11.079603
+No Change Carl,7469,marketing,URGENT: My computer is experiencing random freezes.,2025-11-20 09:13:10.915608
+No Change Carl,7469,Tim the Tech,Run a disk cleanup.,2025-11-20 09:48:10.915608
+No Change Carl,7469,marketing,I checked my email settings,2025-11-20 10:03:10.915608
+No Change Carl,7469,Tim the Tech,Try booting in safe mode.,2025-11-20 10:13:10.915608
+No Change Carl,2466,Mike Assistant Manager,URGENT: I am unable to connect my Bluetooth device.,2025-11-17 10:47:44.109242
+No Change Carl,2466,Tim the Tech,Try reinstalling the application.,2025-11-18 17:52:44.109242
+No Change Carl,2466,Mike Assistant Manager,I ensured that all cables are connected properly,2025-11-19 01:42:44.109242
+No Change Carl,2466,Tim the Tech,Update your software to the latest version.,2025-11-19 08:50:58.058081
+Hedges MSP,6634,Franky Smith,URGENT: I am unable to access secure websites.,2025-11-18 19:36:03.851953
+Hedges MSP,6634,Lindsey Syncro,Reset the printer by turning it off and on again.,2025-11-19 19:21:03.851953
+Hedges MSP,6634,Franky Smith,I rebooted multiple times,2025-11-19 20:41:03.851953
+Hedges MSP,6634,Lindsey Syncro,Close and reopen your program.,2025-11-20 04:50:14.968506
+John Smith Smithing,6049,billing,Attention: I cannot connect to the remote desktop.,2025-11-20 20:54:48.428913
+John Smith Smithing,6049,Daniel Hedges,Verify that your proxy settings are correct.,2025-11-20 21:39:48.428913
+John Smith Smithing,6049,billing,I cleared my cache and cookies,2025-11-20 21:44:48.428913
+John Smith Smithing,6049,Daniel Hedges,Close and reopen your program.,2025-11-20 21:54:48.428913
+Hedges MSP,6150,pap,Attention: My printer is jammed.,2025-11-22 04:01:10.755453
+Hedges MSP,6150,Daniel Hedges,Try unplugging and plugging back in the device.,2025-11-22 05:01:10.755453
+No Change Carl,6659,billing,URGENT: I can't update my system drivers automatically.,2025-11-21 02:50:29.542932
+No Change Carl,6659,Tim the Tech,Check for physical damage to cables.,2025-11-21 03:50:29.542932
+🦷Dental Dan Dentistry,7776,Daniel User,URGENT: My computer's hardware acceleration is disabled.,2025-11-18 22:56:15.771647
+🦷Dental Dan Dentistry,7776,Daniel Hedges,Confirm that all necessary services are running.,2025-11-18 23:56:15.771647
+🐑 Sam's Sheep and Shearing,7272,billing,Attention: I can't connect to the Wi-Fi network.,2025-11-21 07:42:51.087586
+🐑 Sam's Sheep and Shearing,7272,Tim the Tech,Check for overheating and clean your fans.,2025-11-22 08:25:40.366473
+🦷Dental Dan Dentistry,3576,Christina Smith,Attention: The battery indicator is not accurate.,2025-11-20 19:09:00.464072
+🦷Dental Dan Dentistry,3576,Daniel Hedges,Clear your browser cache.,2025-11-20 20:09:00.464072
+John Smith Smithing,7310,Dan the Dentist,Attention: I'm receiving too many spam emails.,2025-11-21 13:26:43.027611
+John Smith Smithing,7310,Lindsey Syncro,Try reinstalling the application.,2025-11-21 14:26:43.027611
+John Smith Smithing,1390,Mike Assistant Manager,URGENT: The application won't save my work.,2025-11-21 17:31:38.735991
+John Smith Smithing,1390,Lindsey Syncro,Temporarily disable your antivirus software.,2025-11-21 17:46:38.735991
+John Smith Smithing,1390,Mike Assistant Manager,I rechecked the settings and still encounter the same problem.,2025-11-21 17:51:38.735991
+John Smith Smithing,1390,Lindsey Syncro,Confirm that your printer is powered on.,2025-11-21 18:01:38.735991
+John Smith Smithing,1390,Mike Assistant Manager,I followed all your suggestions,2025-11-21 18:11:38.735991
+John Smith Smithing,1390,Lindsey Syncro,Clear temporary files.,2025-11-21 18:31:38.735991

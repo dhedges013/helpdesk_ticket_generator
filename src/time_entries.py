@@ -13,6 +13,7 @@ from .utils import (
     get_all_time_entry_labor_types,
     get_all_time_entry_note_templates,
 )
+from .models import Ticket, TimeEntry
 
 logger = config.get_logger(__name__)
 
@@ -61,10 +62,14 @@ class TimeEntryRecord:
     labor_type: str
     created_at: datetime
     notes: str
-    dependencies: List[int] = field(default_factory=list)
+    charge: bool
 
     def to_row(self) -> dict:
         """Convert the dataclass into a dictionary for CSV output."""
+
+        created_value = self.created_at
+        if isinstance(created_value, datetime):
+            created_value = created_value.replace(microsecond=0).isoformat(sep=" ")
 
         return {
             "Customer": self.customer,
@@ -75,9 +80,9 @@ class TimeEntryRecord:
             "Visibility": self.visibility,
             "Billable Status": self.billable_status,
             "Labor Type": self.labor_type,
-            "Created At": self.created_at,
+            "Created At": created_value,
             "Notes": self.notes,
-            "Dependencies": ";".join(str(dep) for dep in self.dependencies),
+            "Charge": str(self.charge).lower(),
         }
 
 
@@ -126,22 +131,7 @@ def _generate_offsets(
     return sorted(random.sample(possible_offsets, count))
 
 
-def _prepare_dependencies(prior_entries: Sequence[dict]) -> List[int]:
-    """Placeholder for future dependency mapping between time entries."""
-
-    if not prior_entries:
-        return []
-
-    available = [entry.get("Entry Sequence") for entry in prior_entries if entry.get("Entry Sequence") is not None]
-    if not available:
-        return []
-
-    max_dependencies = min(2, len(available))
-    selected = random.sample(available, k=random.randint(0, max_dependencies)) if max_dependencies else []
-    return sorted(selected)
-
-
-def generate_time_entries(ticket: dict, prior_entries: Optional[Sequence[dict]] = None) -> List[dict]:
+def generate_time_entries(ticket: Ticket, prior_entries: Optional[Sequence[dict]] = None) -> List[TimeEntry]:
     """Generate discrete technician time entries for a ticket.
 
     Args:
@@ -220,9 +210,8 @@ def generate_time_entries(ticket: dict, prior_entries: Optional[Sequence[dict]] 
         entry_count = max_entries_by_window
 
     offsets = _generate_offsets(entry_count, start_time, end_time, max(1, config.TIME_ENTRY_DURATION_INTERVAL_MINUTES))
-    dependency_source = list(prior_entries) if prior_entries else None
 
-    generated_entries: List[dict] = []
+    generated_entries: List[TimeEntry] = []
 
     remaining_minutes = available_minutes
 
@@ -243,7 +232,7 @@ def generate_time_entries(ticket: dict, prior_entries: Optional[Sequence[dict]] 
         labor_type = random.choice(LABOR_TYPES)
         created_at = start_time + timedelta(minutes=offsets[index])
         notes = random.choice(NOTE_TEMPLATES).format(subject=subject, duration=duration, tech=tech)
-        dependencies = _prepare_dependencies(dependency_source) if dependency_source else []
+        charge = billable == "Billable"
 
         record = TimeEntryRecord(
             customer=customer,
@@ -256,12 +245,10 @@ def generate_time_entries(ticket: dict, prior_entries: Optional[Sequence[dict]] 
             labor_type=labor_type,
             created_at=created_at,
             notes=notes,
-            dependencies=dependencies,
+            charge=charge,
         )
         row = record.to_row()
         generated_entries.append(row)
-        if dependency_source is not None:
-            dependency_source.append(row)
 
     logger.info("Generated %s time entries for Ticket %s.", len(generated_entries), ticket_number)
     return generated_entries

@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Iterable, List, Sequence
 
 from src import config, preferences, utils
+from src.probability import get_registry
 import main as ticket_main
 
 
@@ -36,6 +37,25 @@ def _display_dataset(label: str, values: List[str]) -> None:
     print(f"  {_format_horizontal_preview(values)}")
 
 
+def display_tech_profile_assignments() -> None:
+    """Show which probability profile was dynamically assigned to each technician."""
+
+    try:
+        registry = get_registry()
+        assignments = registry.get_tech_profile_mapping()
+    except Exception as exc:  # pragma: no cover - defensive CLI logging
+        print(f"\nTech profile assignments: Unable to load ({exc})")
+        return
+
+    print("\nTech profile assignments for this run:")
+    if not assignments:
+        print("  No technician profiles assigned. Technicians will use the default profile.")
+        return
+
+    for tech, profile in sorted(assignments.items()):
+        print(f"  {tech}: {profile}")
+
+
 def prompt_review_ticket_metadata() -> None:
     """Display the datasets that power ticket generation."""
 
@@ -55,6 +75,8 @@ def prompt_review_ticket_metadata() -> None:
             print(f"\n{label}: Unable to load data ({exc})")
             continue
         _display_dataset(label, list(values))
+
+    display_tech_profile_assignments()
 
 
 def _prompt_yes_no_memorized(key: str, message: str, *, default: bool | None = None) -> bool:
@@ -186,6 +208,12 @@ def main() -> None:
 
     prompt_for_runtime_configuration()
     prompt_review_ticket_metadata()
+
+    try:
+        input("\nPress Enter to continue to ticket generation...")
+    except (KeyboardInterrupt, EOFError):
+        print("\nTicket generation canceled by user.")
+        return
 
     if _prompt_yes_no_memorized("clear_results", "Clear existing result CSV files?", default=False):
         clear_results_outputs()

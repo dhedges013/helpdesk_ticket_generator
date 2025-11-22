@@ -16,6 +16,7 @@ from .utils import (
     get_random_subject,
     get_random_tech,
 )
+from .models import Ticket
 
 logger = config.get_logger(__name__)
 PROFILE_REGISTRY = get_registry()
@@ -34,24 +35,38 @@ def generate_random_datetime():
 
 
 
-def generate_random_ticket_number():
+def generate_random_ticket_number() -> Optional[int]:
     try:
         logging.debug("Generating random ticket number.")
         return random.randint(1000, 9999)
     except Exception as e:
         logging.error(f"Error generating random ticket number: {e}")
         return None
+
+
+def _simulate_closed_at(start_time: datetime, profile: ProbabilityProfile) -> Optional[datetime]:
+    """Derive a closed timestamp based on profile skill and ticket age."""
+
+    now = datetime.now()
+    age_days = max(0, (now.date() - start_time.date()).days)
+
+    if age_days == 0 and random.random() < profile.same_day_close_rate:
+        return min(now, start_time + timedelta(minutes=random.randint(30, 8 * 60)))
+
+    horizon = min(profile.max_close_days, age_days if age_days > 0 else profile.max_close_days)
+    for day in range(1, horizon + 1):
+        if random.random() < profile.daily_close_rate:
+            closed_candidate = start_time + timedelta(days=day, minutes=random.randint(15, 6 * 60))
+            return min(now, closed_candidate)
+
+    return None
     
-def _resolve_profile(customer: Optional[str], tech: Optional[str], context: Optional[GenerationContext]) -> ProbabilityProfile:
-    if context:
-        return context.resolve_profile(customer=customer, tech=tech)
-    return PROFILE_REGISTRY.resolve_profile(customer=customer, tech=tech)
-
-
-def generate_ticket(context: Optional[GenerationContext] = None):
+def generate_ticket(context: Optional[GenerationContext] = None) -> Optional[Ticket]:
     # Ticket class or function to generate a ticket
     logging.debug("Starting ticket generation.")
     try:
+        profile_registry = context.probability_registry if context else PROFILE_REGISTRY
+
         ticket_number = generate_random_ticket_number()
         # Ensure all fields are generated correctly
         contact = get_random_contact()
@@ -74,24 +89,31 @@ def generate_ticket(context: Optional[GenerationContext] = None):
             logging.warning("No description generated. Setting default.")
             description = "No description provided."
 
-        profile = _resolve_profile(customer, tech, context)
+        tech_profile = (
+            context.resolve_tech_profile(tech) if context else profile_registry.resolve_tech_profile(tech)
+        )
+        customer_profile = (
+            context.resolve_customer_profile(customer)
+            if context
+            else profile_registry.resolve_customer_profile(customer)
+        )
 
-        issue_type = get_random_issue_type(profile)
+        issue_type = get_random_issue_type(tech_profile)
         if not issue_type:
             logging.warning("No issue type generated. Setting default.")
             issue_type = "General Inquiry"
 
-        priority = get_random_priority(profile)
+        priority = get_random_priority(customer_profile)
         if not priority:
             logging.warning("No priority generated. Setting default.")
             priority = "Low"
 
-        status = get_random_status(profile)
+        status = get_random_status(customer_profile)
         if not status:
             logging.warning("No status generated. Setting default.")
             status = "Open"
 
-        subject = get_random_subject(profile)
+        subject = get_random_subject(tech_profile)
         if not subject:
             logging.warning("No subject generated. Setting default.")
             subject = "General Issue"
@@ -104,18 +126,30 @@ def generate_ticket(context: Optional[GenerationContext] = None):
             logging.warning(f"End time {end_time} is before start time {start_time}. Adjusting end time.")
             end_time = start_time + timedelta(hours=1)
 
-        ticket = {            
+        closed_at = _simulate_closed_at(start_time, tech_profile)
+        if isinstance(end_time, datetime) and isinstance(closed_at, datetime):
+            effective_end = min(end_time, closed_at)
+        elif isinstance(end_time, datetime):
+            effective_end = end_time
+        else:
+            effective_end = closed_at
+
+        if isinstance(closed_at, datetime) and closed_at <= datetime.now():
+            status = "Resolved"
+
+        ticket: Ticket = {
             "Customer": customer,
             "Ticket Number": ticket_number,
             "Contact": contact,
             "Subject": subject,
-            "Status": status,         
+            "Status": status,
             "Description": description,
             "Issue Type": issue_type,
             "Assigned Tech": tech,
             "Priority": priority,                        
             "Start Time": start_time,
-            "End Time": end_time
+            "End Time": effective_end,
+            "Closed At": closed_at,
         }
 
         logging.info(f"Ticket generated successfully: {ticket}")
